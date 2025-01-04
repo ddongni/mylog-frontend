@@ -22,18 +22,25 @@ const formatElapsedTime = (seconds) => {
 
 function CMDLog({ userId }) {
   const [people, setPeople] = useState([
-    { name: 'Jeongwook', status: 'running', icon: 'dizzy', elapsedTime: 2, lastUpdated: Date.now(), animatedText: '' },
-    { name: 'Alice', status: 'thinking', icon: 'thinking', elapsedTime: 3, lastUpdated: Date.now(), animatedText: '' },
+    { id: 1, name: 'Jeongwook', status: 'running', icon: 'dizzy', elapsedTime: 2, lastUpdated: Date.now(), animatedText: '' },
+    { id: 2, name: 'Alice', status: 'thinking', icon: 'thinking', elapsedTime: 3, lastUpdated: Date.now(), animatedText: '' },
   ]);
   const [userStatus, setUserStatus] = useState('online');
-  const [userIcon, setUserIcon] = useState('neutral'); // 기본 아이콘
+  const [userIcon, setUserIcon] = useState('neutral');
   const [showIconPicker, setShowIconPicker] = useState(false);
   const [showStatusPicker, setShowStatusPicker] = useState(false);
   const [logColor, setLogColor] = useState('#000');
   const [textColor, setTextColor] = useState('lime');
   const logEndRef = useRef(null);
+  const nextId = useRef(3);
 
-  const statusOptions = ['online', 'coding', 'relaxing', 'sleeping', 'working', 'eating', 'drinking', 'exercising', 'shopping', 'traveling', 'cleaning', 'studying', 'chatting', 'driving', 'walking', 'running', 'swimming', 'thinking', 'angry', 'crying', 'smiling', 'laughing', 'showering', 'typing', 'hiking', 'fishing', 'gaming', 'painting', 'gardening', 'dancing'];
+  const statusOptions = [
+    'online', 'coding', 'relaxing', 'sleeping', 'working', 'eating',
+    'drinking', 'exercising', 'shopping', 'traveling', 'cleaning',
+    'studying', 'chatting', 'driving', 'walking', 'running', 'swimming',
+    'thinking', 'angry', 'crying', 'smiling', 'laughing', 'showering',
+    'typing', 'hiking', 'fishing', 'gaming', 'painting', 'gardening', 'dancing',
+  ];
 
   useEffect(() => {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -41,6 +48,7 @@ function CMDLog({ userId }) {
 
   const addUserToLog = () => {
     const newEntry = {
+      id: nextId.current++,
       name: userId || 'Guest',
       status: userStatus,
       icon: userIcon,
@@ -49,40 +57,51 @@ function CMDLog({ userId }) {
       animatedText: '',
     };
 
-    setPeople((prevPeople) => [...prevPeople, newEntry]);
-
-    // 타이핑 애니메이션 시작
-    animateText(newEntry);
+    setPeople((prevPeople) => {
+      const updatedPeople = [...prevPeople, newEntry];
+      animateText(newEntry);
+      return updatedPeople;
+    });
   };
 
   const animateText = (entry) => {
     const fullText = `${entry.name} | ${entry.status} | ${formatElapsedTime(entry.elapsedTime)}`;
     let currentIndex = 0;
-  
+
     const interval = setInterval(() => {
-      if (currentIndex < fullText.length) {
+      setPeople((prevPeople) =>
+        prevPeople.map((person) =>
+          person.id === entry.id
+            ? { ...person, animatedText: fullText.slice(0, currentIndex + 1) }
+            : person
+        )
+      );
+
+      currentIndex++;
+
+      if (currentIndex >= fullText.length) {
+        clearInterval(interval);
         setPeople((prevPeople) =>
           prevPeople.map((person) =>
-            person.name === entry.name && person.status === entry.status
-              ? { ...person, animatedText: fullText.slice(0, currentIndex + 1) }
+            person.id === entry.id
+              ? { ...person, animatedText: '', lastUpdated: Date.now() }
               : person
           )
         );
-        currentIndex++;
-      } else {
-        clearInterval(interval);
       }
-    }, 50); // 타이핑 속도
+    }, 50);
   };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setPeople((prevPeople) =>
         prevPeople.map((person) => {
           const now = Date.now();
           const timeDiff = Math.floor((now - person.lastUpdated) / 1000);
+
           return {
             ...person,
-            elapsedTime: person.elapsedTime + timeDiff,
+            elapsedTime: person.animatedText ? person.elapsedTime : person.elapsedTime + timeDiff,
             lastUpdated: now,
           };
         })
@@ -104,8 +123,8 @@ function CMDLog({ userId }) {
     <div className="mylogApp" style={{ backgroundColor: logColor, color: textColor }}>
       <SettingsPopup onChangeBackgroundColor={setLogColor} onChangeTextColor={setTextColor} />
       <div className="log">
-        {people.map((person, index) => (
-          <div key={index} className="log-entry">
+        {people.map((person) => (
+          <div key={person.id} className="log-entry">
             <span className="icon">
               <img src={icons[person.icon]} alt={person.icon} />
             </span>
