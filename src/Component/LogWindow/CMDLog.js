@@ -22,11 +22,11 @@ const formatElapsedTime = (seconds) => {
 
 function CMDLog({ userId }) {
   const [people, setPeople] = useState([
-    { name: 'Jeongwook', status: 'running', icon: '🏃', elapsedTime: 2, lastUpdated: Date.now() },
-    { name: 'Alice', status: 'thinking', icon: '🤔', elapsedTime: 3, lastUpdated: Date.now() },
+    { name: 'Jeongwook', status: 'running', icon: 'dizzy', elapsedTime: 2, lastUpdated: Date.now() },
+    { name: 'Alice', status: 'thinking', icon: 'thinking', elapsedTime: 3, lastUpdated: Date.now() },
   ]);
   const [userStatus, setUserStatus] = useState('online');
-  const [userIcon, setUserIcon] = useState('😊');
+  const [userIcon, setUserIcon] = useState('neutral'); // 기본 아이콘
   const [showIconPicker, setShowIconPicker] = useState(false);
   const [showStatusPicker, setShowStatusPicker] = useState(false);
   const [logColor, setLogColor] = useState('#000');
@@ -35,24 +35,17 @@ function CMDLog({ userId }) {
 
   const statusOptions = ['online', 'coding', 'relaxing', 'sleeping', 'working', 'eating', 'drinking', 'exercising', 'shopping', 'traveling', 'cleaning', 'studying', 'chatting', 'driving', 'walking', 'running', 'swimming', 'thinking', 'angry', 'crying', 'smiling', 'laughing', 'showering', 'typing', 'hiking', 'fishing', 'gaming', 'painting', 'gardening', 'dancing'];
 
-  // 초기 렌더링과 로그 추가 시에만 스크롤
   useEffect(() => {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
+  }, [people]);
 
   const addUserToLog = () => {
     setPeople((prevPeople) => [
       ...prevPeople,
       { name: userId || 'Guest', status: userStatus, icon: userIcon, elapsedTime: 0, lastUpdated: Date.now() },
     ]);
-
-    // 로그 추가 후에만 스크롤
-    setTimeout(() => {
-      logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 0);
   };
 
-  // 매 초마다 경과 시간 업데이트
   useEffect(() => {
     const interval = setInterval(() => {
       setPeople((prevPeople) =>
@@ -81,26 +74,26 @@ function CMDLog({ userId }) {
 
   return (
     <div className="mylogApp" style={{ backgroundColor: logColor, color: textColor }}>
-      <SettingsPopup
-        onChangeBackgroundColor={setLogColor}
-        onChangeTextColor={setTextColor}
-      />
+      <SettingsPopup onChangeBackgroundColor={setLogColor} onChangeTextColor={setTextColor} />
       <div className="log">
         {people.map((person, index) => (
           <div key={index} className="log-entry">
-            <span className="icon">{person.icon || icons[person.status] || '❓'}</span>
+            <span className="icon">
+              <img src={icons[person.icon]} alt={person.icon} />
+            </span>
             {person.name} | {person.status} | {formatElapsedTime(person.elapsedTime)}
           </div>
         ))}
         <div ref={logEndRef}></div>
         <div className="input-prompt">
           <span className="icon" onClick={() => setShowIconPicker(true)}>
-            {userIcon}
+            <img src={icons[userIcon]} alt={userIcon} />
           </span>
           {userId || 'Guest'} |{' '}
           <span onClick={() => setShowStatusPicker(true)}>{userStatus}</span>{' '}
-          <button className="common-button" onClick={addUserToLog}>Add to Log</button>
-          <span className="blinking-cursor" style={{ backgroundColor: textColor }}></span>
+          <button className="common-button" onClick={addUserToLog}>
+            Add to Log
+          </button>
         </div>
       </div>
 
@@ -109,20 +102,22 @@ function CMDLog({ userId }) {
           <div className="popup-content">
             <h3>Select an Icon</h3>
             <div className="icon-grid">
-              {Object.values(icons).map((icon, index) => (
-                <span
+              {Object.entries(icons).map(([key, icon], index) => (
+                <div
                   key={index}
                   className="icon-option"
                   onClick={() => {
-                    selectIcon(icon);
+                    selectIcon(key);
                     setShowIconPicker(false);
                   }}
                 >
-                  {icon}
-                </span>
+                  <img src={icon} alt={key} className="icon-image" />
+                </div>
               ))}
             </div>
-            <button className="common-button" onClick={() => setShowIconPicker(false)}>Close</button>
+            <button className="common-button" onClick={() => setShowIconPicker(false)}>
+              Close
+            </button>
           </div>
         </div>
       )}
@@ -145,7 +140,9 @@ function CMDLog({ userId }) {
                 </div>
               ))}
             </div>
-            <button className="common-button" onClick={() => setShowStatusPicker(false)}>Close</button>
+            <button className="common-button" onClick={() => setShowStatusPicker(false)}>
+              Close
+            </button>
           </div>
         </div>
       )}
