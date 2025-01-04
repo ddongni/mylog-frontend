@@ -6,11 +6,11 @@ function CMDLoginPopup({ onLogin }) {
   const [inputValue, setInputValue] = useState('');
 
   const handleLogin = () => {
-    setIsNicknameSet(true); // 로그인 완료 상태로 전환
+    setIsNicknameSet(true);
   };
 
   const handleConfirm = () => {
-    onLogin(inputValue || 'Guest'); // 닉네임 설정
+    onLogin(inputValue || 'Guest');
   };
 
   return (
