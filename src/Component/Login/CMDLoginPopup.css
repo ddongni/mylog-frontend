@@ -1,0 +1,22 @@
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .cmd-button {
+    padding: 10px;
+    border: 1px solid lime;
+    background-color: black;
+    color: lime;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+  }
+  
+  .cmd-button:hover {
+    background-color: lime;
+    color: black;
+  }
+  
