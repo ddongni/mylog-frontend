@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './CMDNicknamePopup.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { updateNickname } from '../../store/slices/userSlice';
+import { updateNickname, setNickname } from '../../store/slices/userSlice';
 
 function CMDNicknamePopup() {
   const dispatch = useDispatch();
@@ -12,6 +12,7 @@ function CMDNicknamePopup() {
   const handleConfirm = async() => {
     try {
       await dispatch(updateNickname(inputValue)).unwrap();
+      await dispatch(setNickname(inputValue));
       navigate('/');
     } catch (error) {
       console.error('Error fetching user:', error);
