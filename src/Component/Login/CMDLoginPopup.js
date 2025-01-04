@@ -1,44 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './CMDLoginPopup.css';
 
-function CMDLoginPopup({ onLogin }) {
-  const [isNicknameSet, setIsNicknameSet] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+function CMDLoginPopup() {
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
 
   const handleLogin = () => {
-    setIsNicknameSet(true);
-  };
-
-  const handleConfirm = () => {
-    onLogin(inputValue || 'Guest');
+    window.location.href = serverUrl + '/oauth2/authorization/google';
   };
 
   return (
     <div className="login-popup">
       <h2 className="cmd-title">Login</h2>
       <div className="login-content">
-        {!isNicknameSet ? (
-          <>
-            <button className="cmd-button" onClick={handleLogin}>
-              Login
-            </button>
-          </>
-        ) : (
-          <>
-            <label htmlFor="nickname">Set Nickname:</label>
-            <input
-              type="text"
-              id="nickname"
-              className="cmd-input"
-              placeholder="Enter your nickname"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-            />
-            <button className="cmd-button" onClick={handleConfirm}>
-              Confirm
-            </button>
-          </>
-        )}
+        <button className="cmd-button" onClick={handleLogin}>
+          Login
+        </button>
       </div>
     </div>
   );

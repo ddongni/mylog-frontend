@@ -1,14 +1,13 @@
 import './App.css';
 import CMDLoginPopup from './Component/Login/CMDLoginPopup';
+import CMDNicknamePopup from './Component/Nickname/CMDNicknamePopup';
 import CMDLog from './Component/LogWindow/CMDLog';
+import LoginSuccess from './app/login/LoginSuccess';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import * as THREE from 'three';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState('');
-
   useEffect(() => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -69,17 +68,14 @@ function App() {
     };
   }, []);
 
-  const handleLogin = (username) => {
-    setUserId(username);
-    setIsLoggedIn(true);
-  };
-
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/login" element={<CMDLoginPopup onLogin={handleLogin} />} />
-          <Route path="/home" element={<CMDLog userId={userId} />} />
+          <Route path="/" element={<CMDLog />} />
+          <Route path="/login" element={<CMDLoginPopup />} />
+          <Route path="/login/success" element={<LoginSuccess />} />
+          <Route path="/nickname" element={<CMDNicknamePopup />} />
         </Routes>
       </div>
     </Router>

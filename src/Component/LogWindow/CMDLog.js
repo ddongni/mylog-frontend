@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import './CMDLog.css';
 import icons from './icons';
 import SettingsPopup from '../SettingsPopup/SettingsPopup';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const formatElapsedTime = (seconds) => {
   const days = Math.floor(seconds / (24 * 60 * 60));
@@ -20,7 +22,8 @@ const formatElapsedTime = (seconds) => {
   }
 };
 
-function CMDLog({ userId }) {
+function CMDLog() {
+  const navigate = useNavigate();
   const [people, setPeople] = useState([
     { name: 'Jeongwook', status: 'running', icon: 'dizzy', elapsedTime: 2, lastUpdated: Date.now() },
     { name: 'Alice', status: 'thinking', icon: 'thinking', elapsedTime: 3, lastUpdated: Date.now() },
@@ -32,6 +35,7 @@ function CMDLog({ userId }) {
   const [logColor, setLogColor] = useState('#000');
   const [textColor, setTextColor] = useState('lime');
   const logEndRef = useRef(null);
+  const { nickname } = useSelector((state) => state.user);
 
   const statusOptions = ['online', 'coding', 'relaxing', 'sleeping', 'working', 'eating', 'drinking', 'exercising', 'shopping', 'traveling', 'cleaning', 'studying', 'chatting', 'driving', 'walking', 'running', 'swimming', 'thinking', 'angry', 'crying', 'smiling', 'laughing', 'showering', 'typing', 'hiking', 'fishing', 'gaming', 'painting', 'gardening', 'dancing'];
 
@@ -42,9 +46,15 @@ function CMDLog({ userId }) {
   const addUserToLog = () => {
     setPeople((prevPeople) => [
       ...prevPeople,
-      { name: userId || 'Guest', status: userStatus, icon: userIcon, elapsedTime: 0, lastUpdated: Date.now() },
+      { name: nickname || 'Guest', status: userStatus, icon: userIcon, elapsedTime: 0, lastUpdated: Date.now() },
     ]);
   };
+
+  useEffect(() => {
+    if(nickname === null) {
+      navigate('/login');
+    }
+  }, [navigate, nickname]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -89,7 +99,7 @@ function CMDLog({ userId }) {
           <span className="icon" onClick={() => setShowIconPicker(true)}>
             <img src={icons[userIcon]} alt={userIcon} />
           </span>
-          {userId || 'Guest'} |{' '}
+          {nickname || 'Guest'} |{' '}
           <span onClick={() => setShowStatusPicker(true)}>{userStatus}</span>{' '}
           <button className="common-button" onClick={addUserToLog}>
             Add to Log
