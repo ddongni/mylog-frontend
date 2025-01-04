@@ -22,8 +22,8 @@ const formatElapsedTime = (seconds) => {
 
 function CMDLog({ userId }) {
   const [people, setPeople] = useState([
-    { name: 'Jeongwook', status: 'running', icon: 'dizzy', elapsedTime: 2, lastUpdated: Date.now() },
-    { name: 'Alice', status: 'thinking', icon: 'thinking', elapsedTime: 3, lastUpdated: Date.now() },
+    { name: 'Jeongwook', status: 'running', icon: 'dizzy', elapsedTime: 2, lastUpdated: Date.now(), animatedText: '' },
+    { name: 'Alice', status: 'thinking', icon: 'thinking', elapsedTime: 3, lastUpdated: Date.now(), animatedText: '' },
   ]);
   const [userStatus, setUserStatus] = useState('online');
   const [userIcon, setUserIcon] = useState('neutral'); // 기본 아이콘
@@ -40,12 +40,40 @@ function CMDLog({ userId }) {
   }, [people]);
 
   const addUserToLog = () => {
-    setPeople((prevPeople) => [
-      ...prevPeople,
-      { name: userId || 'Guest', status: userStatus, icon: userIcon, elapsedTime: 0, lastUpdated: Date.now() },
-    ]);
+    const newEntry = {
+      name: userId || 'Guest',
+      status: userStatus,
+      icon: userIcon,
+      elapsedTime: 0,
+      lastUpdated: Date.now(),
+      animatedText: '',
+    };
+
+    setPeople((prevPeople) => [...prevPeople, newEntry]);
+
+    // 타이핑 애니메이션 시작
+    animateText(newEntry);
   };
 
+  const animateText = (entry) => {
+    const fullText = `${entry.name} | ${entry.status} | ${formatElapsedTime(entry.elapsedTime)}`;
+    let currentIndex = 0;
+  
+    const interval = setInterval(() => {
+      if (currentIndex < fullText.length) {
+        setPeople((prevPeople) =>
+          prevPeople.map((person) =>
+            person.name === entry.name && person.status === entry.status
+              ? { ...person, animatedText: fullText.slice(0, currentIndex + 1) }
+              : person
+          )
+        );
+        currentIndex++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 50); // 타이핑 속도
+  };
   useEffect(() => {
     const interval = setInterval(() => {
       setPeople((prevPeople) =>
@@ -81,7 +109,7 @@ function CMDLog({ userId }) {
             <span className="icon">
               <img src={icons[person.icon]} alt={person.icon} />
             </span>
-            {person.name} | {person.status} | {formatElapsedTime(person.elapsedTime)}
+            {person.animatedText || `${person.name} | ${person.status} | ${formatElapsedTime(person.elapsedTime)}`}
           </div>
         ))}
         <div ref={logEndRef}></div>
@@ -94,6 +122,7 @@ function CMDLog({ userId }) {
           <button className="common-button" onClick={addUserToLog}>
             Add to Log
           </button>
+          <div className="blinking-cursor"></div>
         </div>
       </div>
 
