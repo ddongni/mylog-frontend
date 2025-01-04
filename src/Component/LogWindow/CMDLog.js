@@ -35,12 +35,13 @@ function CMDLog({ userId }) {
   const nextId = useRef(3);
 
   const statusOptions = [
-    'online', 'coding', 'relaxing', 'sleeping', 'working', 'eating',
-    'drinking', 'exercising', 'shopping', 'traveling', 'cleaning',
-    'studying', 'chatting', 'driving', 'walking', 'running', 'swimming',
-    'thinking', 'angry', 'crying', 'smiling', 'laughing', 'showering',
-    'typing', 'hiking', 'fishing', 'gaming', 'painting', 'gardening', 'dancing',
-  ];
+    'online', 'chatting', 'typing', 'smiling', 'laughing', 'thinking',
+    'working', 'studying', 'coding', 'cleaning', 'shopping',
+    'eating', 'drinking', 'cooking', 'traveling', 'driving', 
+    'walking', 'running', 'exercising', 'swimming', 'hiking',
+    'gardening', 'painting', 'gaming', 'fishing', 
+    'sleeping', 'relaxing', 'crying', 'angry', 'showering', 'dancing',
+];
 
   useEffect(() => {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
