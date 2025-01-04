@@ -1,6 +1,7 @@
 import './App.css';
 import CMDLoginPopup from './Component/Login/CMDLoginPopup';
 import CMDLog from './Component/LogWindow/CMDLog';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as THREE from 'three';
 
@@ -74,10 +75,14 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <CMDLog userId={userId} />
-      {!isLoggedIn && <CMDLoginPopup onLogin={handleLogin} />}
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/login" element={<CMDLoginPopup onLogin={handleLogin} />} />
+          <Route path="/home" element={<CMDLog userId={userId} />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
