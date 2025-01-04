@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import './CMDLoginPopup.css';
 
 function CMDLoginPopup({ onLogin }) {
-  const [inputValue, setInputValue] = useState('');
   const [isNicknameSet, setIsNicknameSet] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   const handleLogin = () => {
-    setIsNicknameSet(true); // 닉네임 설정 상태로 변경
+    setIsNicknameSet(true); // 로그인 완료 상태로 전환
   };
 
   const handleConfirm = () => {
-    onLogin(inputValue || 'Guest'); // 닉네임 전달
+    onLogin(inputValue || 'Guest'); // 닉네임 설정
   };
 
   return (
@@ -19,21 +19,21 @@ function CMDLoginPopup({ onLogin }) {
       <div className="login-content">
         {!isNicknameSet ? (
           <>
-            <label htmlFor="username">Enter Username:</label>
-            <input
-              type="text"
-              id="username"
-              className="cmd-input"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-            />
             <button className="cmd-button" onClick={handleLogin}>
-              Set Nickname
+              Login
             </button>
           </>
         ) : (
           <>
-            <p>Nickname: {inputValue || 'Guest'}</p>
+            <label htmlFor="nickname">Set Nickname:</label>
+            <input
+              type="text"
+              id="nickname"
+              className="cmd-input"
+              placeholder="Enter your nickname"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
             <button className="cmd-button" onClick={handleConfirm}>
               Confirm
             </button>
