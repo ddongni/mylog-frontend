@@ -8,6 +8,12 @@
   align-items: center;
   padding: 10px;
 }
+body {
+  margin: 0;
+  overflow: hidden;
+  background: black;
+}
+
 
 .mylogApp {
   width: 100%;

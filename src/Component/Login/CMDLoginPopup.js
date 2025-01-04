@@ -20,14 +20,9 @@ function CMDLoginPopup({ onLogin }) {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <div className="button-group">
-          <button className="cmd-button" onClick={handleLogin}>
-            Login
-          </button>
-          <button className="cmd-button" onClick={() => onLogin('Guest')}>
-            Login as Guest
-          </button>
-        </div>
+        <button className="cmd-button" onClick={handleLogin}>
+          Login
+        </button>
       </div>
     </div>
   );

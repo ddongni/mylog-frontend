@@ -1,41 +1,43 @@
 .mylogApp {
-    width: 100%;
-    max-width: 600px;
-    overflow-y: auto;
-    border: 1px solid lime;
-    padding: 20px;
-    box-shadow: 0 0 10px lime;
+  width: 50%;
+  max-width: 600px;
+  height: 90%;
+  max-height: 100vh;
+  overflow-y: auto;
+  border: 1px solid lime;
+  padding: 20px;
+  box-shadow: 0 0 10px lime;
+  position: relative;
+}
+
+.log-entry {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  white-space: nowrap;
+}
+
+.icon {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.input-prompt {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.blinking-cursor {
+  display: inline-block;
+  background-color: lime;
+  width: 8px;
+  height: 16px;
+  margin-left: 5px;
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
   }
-  
-  .log-entry {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    white-space: nowrap;
-  }
-  
-  .icon {
-    margin-right: 10px;
-    font-size: 20px;
-  }
-  
-  .input-prompt {
-    margin-top: 10px;
-    font-size: 18px;
-  }
-  
-  .blinking-cursor {
-    display: inline-block;
-    background-color: lime;
-    width: 8px;
-    height: 16px;
-    margin-left: 5px;
-    animation: blink 1s steps(2, start) infinite;
-  }
-  
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
-  }
-  
+}
