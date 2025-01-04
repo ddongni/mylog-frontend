@@ -99,7 +99,7 @@ function CMDLog({ userId }) {
           </span>
           {userId || 'Guest'} |{' '}
           <span onClick={() => setShowStatusPicker(true)}>{userStatus}</span>{' '}
-          <button onClick={addUserToLog}>Add to Log</button>
+          <button className="common-button" onClick={addUserToLog}>Add to Log</button>
           <span className="blinking-cursor" style={{ backgroundColor: textColor }}></span>
         </div>
       </div>
@@ -122,7 +122,7 @@ function CMDLog({ userId }) {
                 </span>
               ))}
             </div>
-            <button onClick={() => setShowIconPicker(false)}>Close</button>
+            <button className="common-button" onClick={() => setShowIconPicker(false)}>Close</button>
           </div>
         </div>
       )}
@@ -145,7 +145,7 @@ function CMDLog({ userId }) {
                 </div>
               ))}
             </div>
-            <button onClick={() => setShowStatusPicker(false)}>Close</button>
+            <button className="common-button" onClick={() => setShowStatusPicker(false)}>Close</button>
           </div>
         </div>
       )}

@@ -60,8 +60,9 @@
 .popup-content {
   background-color: black;
   border: 1px solid lime;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 0 10px lime;
+  width: 400px; /* 팝업 너비 증가 */
   text-align: center;
 }
 
@@ -72,7 +73,7 @@
   margin-top: 10px;
 }
 
-.icon-option, .status-option {
+.icon-option {
   padding: 10px;
   border: 1px solid lime;
   color: lime;
@@ -81,8 +82,27 @@
   text-align: center;
   transition: background-color 0.3s;
 }
+.status-option {
+  padding: 10px;
+  border: 1px solid lime;
+  color: lime;
+  background-color: black;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
+  font-size: 16px; /* 텍스트 크기 조정 */
+}
 
 .icon-option:hover, .status-option:hover {
   background-color: lime;
   color: black;
+}
+
+.common-button {
+  
+  background-color: black;
+  border: 1px solid lime;
+  color: lime;
+  font-size: 20px;
+  cursor: pointer;
 }
