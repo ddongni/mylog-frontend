@@ -54,7 +54,7 @@ function CMDLog() {
   const addUserToLog = () => {
     const newEntry = {
       id: nextId.current++,
-      name: userId || 'Guest',
+      name: nickname || 'Guest',
       status: userStatus,
       icon: userIcon,
       elapsedTime: 0,
