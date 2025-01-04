@@ -25,29 +25,76 @@ const formatElapsedTime = (seconds) => {
 function CMDLog() {
   const navigate = useNavigate();
   const [people, setPeople] = useState([
-    { name: 'Jeongwook', status: 'running', icon: 'dizzy', elapsedTime: 2, lastUpdated: Date.now() },
-    { name: 'Alice', status: 'thinking', icon: 'thinking', elapsedTime: 3, lastUpdated: Date.now() },
+    { id: 1, name: 'Jeongwook', status: 'running', icon: 'dizzy', elapsedTime: 2, lastUpdated: Date.now(), animatedText: '' },
+    { id: 2, name: 'Alice', status: 'thinking', icon: 'thinking', elapsedTime: 3, lastUpdated: Date.now(), animatedText: '' },
   ]);
   const [userStatus, setUserStatus] = useState('online');
-  const [userIcon, setUserIcon] = useState('neutral'); // 기본 아이콘
+  const [userIcon, setUserIcon] = useState('neutral');
   const [showIconPicker, setShowIconPicker] = useState(false);
   const [showStatusPicker, setShowStatusPicker] = useState(false);
   const [logColor, setLogColor] = useState('#000');
   const [textColor, setTextColor] = useState('lime');
   const logEndRef = useRef(null);
+  const nextId = useRef(3);
   const { nickname } = useSelector((state) => state.user);
 
-  const statusOptions = ['online', 'coding', 'relaxing', 'sleeping', 'working', 'eating', 'drinking', 'exercising', 'shopping', 'traveling', 'cleaning', 'studying', 'chatting', 'driving', 'walking', 'running', 'swimming', 'thinking', 'angry', 'crying', 'smiling', 'laughing', 'showering', 'typing', 'hiking', 'fishing', 'gaming', 'painting', 'gardening', 'dancing'];
+  const statusOptions = [
+    'online', 'chatting', 'typing', 'smiling', 'laughing', 'thinking',
+    'working', 'studying', 'coding', 'cleaning', 'shopping',
+    'eating', 'drinking', 'cooking', 'traveling', 'driving', 
+    'walking', 'running', 'exercising', 'swimming', 'hiking',
+    'gardening', 'painting', 'gaming', 'fishing', 
+    'sleeping', 'relaxing', 'crying', 'angry', 'showering', 'dancing',
+];
 
   useEffect(() => {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [people]);
 
   const addUserToLog = () => {
-    setPeople((prevPeople) => [
-      ...prevPeople,
-      { name: nickname || 'Guest', status: userStatus, icon: userIcon, elapsedTime: 0, lastUpdated: Date.now() },
-    ]);
+    const newEntry = {
+      id: nextId.current++,
+      name: userId || 'Guest',
+      status: userStatus,
+      icon: userIcon,
+      elapsedTime: 0,
+      lastUpdated: Date.now(),
+      animatedText: '',
+    };
+
+    setPeople((prevPeople) => {
+      const updatedPeople = [...prevPeople, newEntry];
+      animateText(newEntry);
+      return updatedPeople;
+    });
+  };
+
+  const animateText = (entry) => {
+    const fullText = `${entry.name} | ${entry.status} | ${formatElapsedTime(entry.elapsedTime)}`;
+    let currentIndex = 0;
+
+    const interval = setInterval(() => {
+      setPeople((prevPeople) =>
+        prevPeople.map((person) =>
+          person.id === entry.id
+            ? { ...person, animatedText: fullText.slice(0, currentIndex + 1) }
+            : person
+        )
+      );
+
+      currentIndex++;
+
+      if (currentIndex >= fullText.length) {
+        clearInterval(interval);
+        setPeople((prevPeople) =>
+          prevPeople.map((person) =>
+            person.id === entry.id
+              ? { ...person, animatedText: '', lastUpdated: Date.now() }
+              : person
+          )
+        );
+      }
+    }, 50);
   };
 
   useEffect(() => {
@@ -62,9 +109,10 @@ function CMDLog() {
         prevPeople.map((person) => {
           const now = Date.now();
           const timeDiff = Math.floor((now - person.lastUpdated) / 1000);
+
           return {
             ...person,
-            elapsedTime: person.elapsedTime + timeDiff,
+            elapsedTime: person.animatedText ? person.elapsedTime : person.elapsedTime + timeDiff,
             lastUpdated: now,
           };
         })
@@ -86,12 +134,12 @@ function CMDLog() {
     <div className="mylogApp" style={{ backgroundColor: logColor, color: textColor }}>
       <SettingsPopup onChangeBackgroundColor={setLogColor} onChangeTextColor={setTextColor} />
       <div className="log">
-        {people.map((person, index) => (
-          <div key={index} className="log-entry">
+        {people.map((person) => (
+          <div key={person.id} className="log-entry">
             <span className="icon">
               <img src={icons[person.icon]} alt={person.icon} />
             </span>
-            {person.name} | {person.status} | {formatElapsedTime(person.elapsedTime)}
+            {person.animatedText || `${person.name} | ${person.status} | ${formatElapsedTime(person.elapsedTime)}`}
           </div>
         ))}
         <div ref={logEndRef}></div>
@@ -104,6 +152,7 @@ function CMDLog() {
           <button className="common-button" onClick={addUserToLog}>
             Add to Log
           </button>
+          <div className="blinking-cursor"></div>
         </div>
       </div>
 

@@ -1,15 +1,17 @@
 .mylogApp {
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 50%;
-  max-width: 600px;
-  height: 90%;
-  max-height: 100vh;
-  overflow-y: auto;
-  border: 1px solid lime;
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 50%; /* 폭을 화면의 50%로 설정 */
+  height: 90%; /* 높이를 화면의 90%로 설정 */
   padding: 20px;
-  box-shadow: 0 0 10px lime;
-  position: relative;
-  
+  border: 1px solid lime;
+  background-color: #000;
+  box-shadow: 0 0 15px lime;
+  overflow-y: auto; /* 내용이 넘칠 경우 세로 스크롤 생성 */
+  overflow-x: hidden; /* 가로 스크롤 비활성화 */
+  z-index: 50;
 }
 
 .log-entry {
@@ -17,6 +19,7 @@
   align-items: center;
   margin-bottom: 10px;
   white-space: nowrap;
+  font-size: 1rem; /* 기본 글자 크기 */
 }
 
 .icon {
@@ -26,7 +29,7 @@
 
 .input-prompt {
   margin-top: 10px;
-  font-size: 18px;
+  font-size: 1rem; /* 기본 글자 크기 */
 }
 
 .blinking-cursor {
@@ -62,13 +65,19 @@
   border: 1px solid lime;
   padding: 10px;
   box-shadow: 0 0 10px lime;
-  width: 400px; /* 팝업 너비 증가 */
+  width: 90%; /* 팝업 너비: 모바일에서 90% */
   text-align: center;
 }
 
-.icon-grid, .status-grid {
+.icon-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 10px;
   margin-top: 10px;
 }
@@ -82,6 +91,7 @@
   text-align: center;
   transition: background-color 0.3s;
 }
+
 .status-option {
   padding: 10px;
   border: 1px solid lime;
@@ -90,7 +100,7 @@
   cursor: pointer;
   text-align: center;
   transition: background-color 0.3s;
-  font-size: 16px; /* 텍스트 크기 조정 */
+  font-size: 16px;
 }
 
 .icon-option:hover, .status-option:hover {
@@ -99,19 +109,20 @@
 }
 
 .common-button {
-  
   background-color: black;
   border: 1px solid lime;
   color: lime;
-  font-size: 20px;
+  font-size: 1rem;
   cursor: pointer;
 }
+
 .icon img {
   width: 25px;
   height: 25px;
   object-fit: cover;
   margin-right: 5px;
 }
+
 .icon-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
@@ -136,4 +147,47 @@
   height: 40px;
   object-fit: contain;
   margin-bottom: 5px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .mylogApp {
+    width: 90%; /* 모바일에서 폭을 90%로 설정 */
+    height: 80%; /* 모바일에서 높이를 80%로 설정 */
+    padding: 10px;
+  }
+
+  .log-entry {
+    font-size: 0.8rem; /* 모바일에서 글자 크기 축소 */
+  }
+
+  .icon {
+    margin-right: 5px;
+    font-size: 16px; /* 모바일에서 아이콘 크기 축소 */
+  }
+
+  .input-prompt {
+    font-size: 0.8rem; /* 모바일에서 입력창 크기 축소 */
+  }
+
+  .popup-content {
+    width: 95%; /* 팝업 너비: 모바일에서 화면의 95% */
+  }
+
+  .common-button {
+    font-size: 0.9rem; /* 버튼 글자 크기 축소 */
+  }
+
+  .icon img {
+    width: 20px;
+    height: 20px; /* 모바일에서 아이콘 크기 축소 */
+  }
+
+  .icon-option {
+    padding: 5px;
+  }
+
+  .status-option {
+    font-size: 0.8rem; /* 상태 옵션 글자 크기 축소 */
+  }
 }
