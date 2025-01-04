@@ -32,7 +32,7 @@ function CMDLog({ userId }) {
           </div>
         ))}
         <div className="input-prompt">
-          {userId || 'Guest'} <span className="blinking-cursor"></span>
+          {userId || 'Guest'} <span className="blinking-cursor" style={{ backgroundColor: textColor }}></span>
         </div>
       </div>
     </div>
