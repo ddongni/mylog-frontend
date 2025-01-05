@@ -29,7 +29,7 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
 
   const save = async (requestData) => {
     try {
-      await axios.put(`/v1/settings`, requestData);
+      await axios.put(`/v1/settings/update`, requestData);
     } catch (error) {
       console.error('Failed to save', error);
       if(error.message === 'Network Error'){
