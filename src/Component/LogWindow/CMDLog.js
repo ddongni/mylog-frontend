@@ -9,23 +9,6 @@ import api from '../../store/api';
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
-const formatElapsedTime = (seconds) => {
-  // const days = Math.floor(seconds / (24 * 60 * 60));
-  // const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
-  // const minutes = Math.floor((seconds % (60 * 60)) / 60);
-  // const remainingSeconds = seconds % 60;
-
-  // if (days > 0) {
-  //   return `${days} days ${hours} hours`;
-  // } else if (hours > 0) {
-  //   return `${hours} hours ${minutes} minutes`;
-  // } else if (minutes > 0) {
-  //   return `${minutes} minutes`;
-  // } else {
-  //   return `${remainingSeconds} seconds`;
-  // }
-};
-
 function CMDLog() {
   const navigate = useNavigate();
   const [logs, setLogs] = useState([]);
@@ -38,37 +21,61 @@ function CMDLog() {
   const logEndRef = useRef(null);
   const { nickname } = useSelector((state) => state.user);
 
+  const getElapsedTime = (updatedAt) => {
+    const updatedDate = new Date(updatedAt+'Z');
+    const diffMs = Date.now() - updatedDate.getTime();
+
+    const diffSeconds = Math.floor(diffMs / 1000);
+    const diffMinutes = Math.floor(diffSeconds / 60);
+    const diffHours = Math.floor(diffMinutes / 60);
+    const diffDays = Math.floor(diffHours / 24);
+  
+    if (diffSeconds < 60) {
+      return `${diffSeconds} seconds elapsed`;
+    } else if (diffMinutes < 60) {
+      return `${diffMinutes} minutes elapsed`;
+    } else if (diffHours < 24) {
+      return `${diffHours} hours elapsed`;
+    } else {
+      return `${diffDays} days elapsed`;
+    }
+  };
+
   useEffect(() => {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, );
 
-  const animateText = (entry) => {
-    const fullText = `${entry.nickname} | ${entry.status} | ${formatElapsedTime(entry.elapsedTime)}`;
-    let currentIndex = 0;
+  // const animateText = (entry) => {
+  //   const fullText = `${entry.nickname} | ${entry.status} | ${getElapsedTime(entry.updatedAt)}`;
+  //   let currentIndex = 0;
 
-    const interval = setInterval(() => {
-      setLogs((prevLog) =>
-        prevLog.map((log) =>
-          log.id === entry.id
-            ? { ...log, animatedText: fullText.slice(0, currentIndex + 1) }
-            : log
-        )
-      );
+  //   const interval = setInterval(() => {
+  //     setLogs((prevLog) => {
+        // if (!Array.isArray(prevLog)) {
+          // console.error("prevLog is not an array:", prevLog);
+          // return prevLog || [];
+        // }
+      //   return prevLog.map((log) =>
+      //     log.nickname === entry.nickname && log.id === entry.id
+      //       ? { ...log, animatedText: fullText.slice(0, currentIndex + 1) }
+      //       : log
+      //   );
+      // });
 
-      currentIndex++;
+      // currentIndex++;
 
-      if (currentIndex >= fullText.length) {
-        clearInterval(interval);
-        setLogs((prevLog) =>
-          prevLog.map((log) =>
-            log.id === entry.id
-              ? { ...log, animatedText: '', updatedAt: Date.now() }
-              : log
-          )
-        );
-      }
-    }, 50);
-  };
+      // if (currentIndex >= fullText.length) {
+      //   clearInterval(interval);
+        // setLogs((prevLog) =>
+        //   prevLog.map((log) =>
+        //     log.id === entry.id
+        //       ? { ...log, animatedText: '', updatedAt: Date.now() }
+        //       : log
+        //   )
+        // );
+      // }
+    // }, 50);
+  // };
 
   useEffect(() => {
     if(nickname === null) {
@@ -78,24 +85,19 @@ function CMDLog() {
 
   useEffect(() => {
     init();
-    // const interval = setInterval(() => {
-    //   setPeople((prevPeople) =>
-    //     prevPeople.map((person) => {
-    //       const now = Date.now();
-    //       const timeDiff = Math.floor((now - person.updatedAt) / 1000);
+  }, []);
 
-    //       return {
-    //         ...person,
-    //         // elapsedTime: person.animatedText ? person.elapsedTime : person.elapsedTime + timeDiff,
-    //         updatedAt: now,
-    //       };
-    //     })
-    //   );
-    // }, 1000);
-
-    return () => {
-      // clearInterval(interval);
-    }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLogs((prevLogs) =>
+        prevLogs.map((log) => ({
+          ...log,
+          elapsedTime: getElapsedTime(log.updatedAt),
+        }))
+      );
+    }, 1000);
+  
+    return () => clearInterval(interval);
   }, []);
 
   const init = async () => {
@@ -104,10 +106,10 @@ function CMDLog() {
       const userInfo = result.data;
       setUserIcon(userInfo.emojiCode);
       setUserStatus(userInfo.status);
-      if(userInfo.settings.backgroundColor) {
+      if(userInfo.settings?.backgroundColor) {
         setBackgroundColor(userInfo.settings.backgroundColor);
       }
-      if(userInfo.settings.textColor) {
+      if(userInfo.settings?.textColor) {
         setTextColor(userInfo.settings.textColor);
       }
     } catch (error) {
@@ -134,7 +136,8 @@ function CMDLog() {
                 nickname: receivedLog.nickname,
                 emojiCode: receivedLog.emojiCode,
                 status: receivedLog.status,
-                updatedAt: receivedLog.updatedAt
+                updatedAt: receivedLog.updatedAt,
+                // elapsedTime: getElapsedTime(receivedLog.updatedAt)
               }
               if (newLog.nickname !== currentNickname) {
                 setLogs((prevLog) => {
@@ -156,7 +159,7 @@ function CMDLog() {
                   } else {
                     // 닉네임이 다른 경우 새 로그 추가
                     const updatedLog = [...prevLog, newLog];
-                    animateText(newLog); // 새 로그 추가 시 애니메이션 실행
+                    // animateText(newLog); // 새 로그 추가 시 애니메이션 실행
                     return updatedLog;
                   }
                 });
@@ -200,17 +203,18 @@ function CMDLog() {
     }
   };
 
-  const formatToLocalDateTime = (timestamp) => {
+  const formatToUTCDateTime = (timestamp) => {
     const date = new Date(timestamp);
   
-    // 'yyyy-MM-ddTHH:mm:ss' 형식으로 변환
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
+    // Get the UTC components of the date
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
   
+    // Return the formatted UTC date with a 'Z' indicating UTC timezone
     return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
   };
 
@@ -223,17 +227,18 @@ function CMDLog() {
     }
     // TODO: 유효성 검사
 
+    const now = Date.now();
     const newEntry = {
       nickname: nickname,
       emojiCode: userIcon,
       status: userStatus,
-      updatedAt: formatToLocalDateTime(Date.now())
+      updatedAt: formatToUTCDateTime(now),
     };
 
     setLogs((prevLog) => {
       const updatedLog = prevLog.filter((log) => log.nickname !== newEntry.nickname);
       const newLogs = [...updatedLog, newEntry];
-      animateText(newEntry);
+      // animateText(newEntry);
       return newLogs;
     });
 
@@ -257,18 +262,18 @@ function CMDLog() {
         {logs.map((log, index) => (
           <div key={index} className="log-entry">
             <span className="icon">
-              <img src={icons[log.emojiCode].url} alt={log.emojiCode} />
+              <img src={icons[log.emojiCode]?.url} alt={log.emojiCode} />
             </span>
-            {log.animatedText || `${log.nickname} | ${log.status}  | ${formatToLocalDateTime(log.updatedAt)}`}
+          {log.animatedText || `${log.nickname} | ${log.status} | ${getElapsedTime(log.updatedAt)}`}
           </div>
         ))}
         {/* <div ref={logEndRef}></div> */}
         <div className="input-prompt">
           <span className="input-pointer">&gt;</span>
           <span className="icon" onClick={() => setShowIconPicker(true)}>
-            <img src={icons[userIcon].url} alt={userIcon} />
+            <img src={icons[userIcon]?.url} alt={userIcon} />
           </span>
-          {nickname || 'Guest'} |{' '}
+          {nickname || 'Guest'} | {' '}
           <span onClick={() => setShowStatusPicker(true)}>{userStatus}</span>{' '}
           <button className="common-button" onClick={updateLog}>
             Add to Log
