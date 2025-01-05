@@ -1,11 +1,11 @@
 .nickname-popup {
   position: absolute;
-  top: 20%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -20%);
+  transform: translate(-50%, -50%);
   width: 400px;
   padding: 20px;
-    border: 1px solid lime;
+  border: 1px solid lime;
   border-radius: 3px;
   background-color: #000;
   box-shadow: 0 0 15px lime;
@@ -15,7 +15,7 @@
 
 .cmd-title {
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .cmd-error {
@@ -24,14 +24,14 @@
   margin-bottom: 5px;
 }
 .nickname-content {
-  display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
 .cmd-input {
+  width:  80%;
   padding: 10px;
-    border: 1px solid lime;
+  margin: 10px;
+  border: 1px solid lime;
   border-radius: 3px;
   background-color: black;
   color: lime;
@@ -40,8 +40,9 @@
 }
 
 .cmd-button {
+  width: 40%;
   padding: 10px;
-    border: 1px solid lime;
+  border: 1px solid lime;
   border-radius: 3px;
   background-color: black;
   color: lime;
