@@ -4,9 +4,10 @@
   left: 50%;
   transform: translate(-50%, 0);
   width: 50%; /* 폭을 화면의 50%로 설정 */
-  height: 90%; /* 높이를 화면의 90%로 설정 */
+  height: 80%;
   padding: 20px;
-  border: 1px solid lime;
+    border: 1px solid lime;
+  border-radius: 3px;
   background-color: #000;
   box-shadow: 0 0 15px lime;
   overflow-y: auto; /* 내용이 넘칠 경우 세로 스크롤 생성 */
@@ -20,17 +21,29 @@
   margin-bottom: 10px;
   white-space: nowrap;
   font-size: 1rem; /* 기본 글자 크기 */
+  margin-bottom: 5px;
+}
+
+.input-prompt {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 1rem; /* 기본 글자 크기 */
+}
+
+.input-pointer {
+  font-size: 1rem;
+  margin-right: 10px;
+  font-weight: bold;
 }
 
 .icon {
+  display: flex;
+  align-items: center;
   margin-right: 10px;
   font-size: 20px;
 }
 
-.input-prompt {
-  margin-top: 10px;
-  font-size: 1rem; /* 기본 글자 크기 */
-}
 
 .blinking-cursor {
   display: inline-block;
@@ -52,21 +65,24 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 60%;
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10;
+  
 }
 
 .popup-content {
   background-color: black;
-  border: 1px solid lime;
+    border: 1px solid lime;
+  border-radius: 3px;
   padding: 10px;
   box-shadow: 0 0 10px lime;
   width: 90%; /* 팝업 너비: 모바일에서 90% */
   text-align: center;
+  position: relative;
 }
 
 .icon-grid {
@@ -84,7 +100,8 @@
 
 .icon-option {
   padding: 10px;
-  border: 1px solid lime;
+    border: 1px solid lime;
+  border-radius: 3px;
   color: lime;
   background-color: black;
   cursor: pointer;
@@ -94,7 +111,8 @@
 
 .status-option {
   padding: 10px;
-  border: 1px solid lime;
+    border: 1px solid lime;
+  border-radius: 3px;
   color: lime;
   background-color: black;
   cursor: pointer;
@@ -110,7 +128,21 @@
 
 .common-button {
   background-color: black;
+    border: 1px solid lime;
+  border-radius: 3px;
+  color: lime;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px; /* 팝업 내부 상단 */
+  right: 10px; /* 팝업 내부 오른쪽 */
+  background-color: black;
   border: 1px solid lime;
+  border-radius: 3px;
   color: lime;
   font-size: 1rem;
   cursor: pointer;
@@ -146,7 +178,6 @@
   width: 40px;
   height: 40px;
   object-fit: contain;
-  margin-bottom: 5px;
 }
 
 /* 반응형 디자인 */
@@ -190,4 +221,26 @@
   .status-option {
     font-size: 0.8rem; /* 상태 옵션 글자 크기 축소 */
   }
+}
+
+
+.mylog-icon {
+  display: flex;
+  width: 100px; 
+  height: 100px; 
+  font-size: 60px;
+  /* color: lime;
+  border: 1px solid lime;
+  border-radius: 3px;
+  padding: 10px; */
+  margin: 100px;
+  background-color: black;
+  /* box-shadow: 0 0 10px lime; */
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mylog-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px lime;
 }

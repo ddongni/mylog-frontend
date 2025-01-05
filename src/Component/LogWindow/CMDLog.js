@@ -41,7 +41,25 @@ function CMDLog() {
 
   useEffect(() => {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [logs]);
+  }, );
+
+  const addUserToLog = () => {
+    const newEntry = {
+      id: nextId.current++,
+      name: nickname || 'Guest',
+      status: userStatus,
+      icon: userIcon,
+      elapsedTime: 0,
+      lastUpdated: Date.now(),
+      animatedText: '',
+    };
+
+    setPeople((prevPeople) => {
+      const updatedPeople = [...prevPeople, newEntry];
+      animateText(newEntry);
+      return updatedPeople;
+    });
+  };
 
   const animateText = (entry) => {
     const fullText = `${entry.nickname} | ${entry.status} | ${formatElapsedTime(entry.elapsedTime)}`;
@@ -245,8 +263,9 @@ function CMDLog() {
             {log.animatedText || `${log.nickname} | ${log.status}  | ${formatToLocalDateTime(log.updatedAt)}`}
           </div>
         ))}
-        <div ref={logEndRef}></div>
+        {/* <div ref={logEndRef}></div> */}
         <div className="input-prompt">
+          <span className="input-pointer">&gt;</span>
           <span className="icon" onClick={() => setShowIconPicker(true)}>
             <img src={icons[userIcon].url} alt={userIcon} />
           </span>
@@ -260,7 +279,6 @@ function CMDLog() {
       </div>
 
       {showIconPicker && (
-        <div className="popup">
           <div className="popup-content">
             <h3>Select an Icon</h3>
             <div className="icon-grid">
@@ -277,17 +295,18 @@ function CMDLog() {
                 </div>
               ))}
             </div>
-            <button className="common-button" onClick={() => setShowIconPicker(false)}>
+            <button className="close-button" onClick={() => setShowIconPicker(false)}>
               Close
             </button>
           </div>
-        </div>
       )}
 
       {showStatusPicker && (
-        <div className="popup">
           <div className="popup-content">
             <h3>Select a Status</h3>
+            <button className="close-button" onClick={() => setShowStatusPicker(false)}>
+              Close
+            </button>
             <div className="status-grid">
               {statusOptions.map((status, index) => (
                 <div
@@ -302,11 +321,8 @@ function CMDLog() {
                 </div>
               ))}
             </div>
-            <button className="common-button" onClick={() => setShowStatusPicker(false)}>
-              Close
-            </button>
+            
           </div>
-        </div>
       )}
     </div>
   );

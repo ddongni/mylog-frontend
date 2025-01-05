@@ -8,6 +8,7 @@ function CMDNicknamePopup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
+  const [errorMassage, setErrorMassage] = useState('');
 
   const handleConfirm = async() => {
     try {
@@ -16,6 +17,7 @@ function CMDNicknamePopup() {
       navigate('/');
     } catch (error) {
       console.error('Error fetching user:', error);
+      setErrorMassage('nickname is already taken');
     }
   };
 
@@ -23,7 +25,7 @@ function CMDNicknamePopup() {
     <div className="nickname-popup">
       <h2 className="cmd-title">Nickname</h2>
       <div className="nickname-content">
-          <label htmlFor="nickname">Set Nickname:</label>
+          <p className="cmd-error">{errorMassage}</p>
           <input
             type="text"
             id="nickname"
