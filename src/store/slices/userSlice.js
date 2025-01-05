@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../api';
+import axios from 'axios';
 
 export const updateNickname = createAsyncThunk(
     'user/updateNickname',
     async (nickname) => {
       try {
         const requestData = { nickname: nickname };
-        const { data } = await api.put(`/v1/users/nickname`, requestData);
+        const { data } = await axios.put(`/v1/users/nickname`, requestData);
         return data;
       } catch (error) {
         throw error;

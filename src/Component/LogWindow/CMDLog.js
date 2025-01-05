@@ -5,9 +5,9 @@ import statusOptions from './status';
 import SettingsPopup from '../SettingsPopup/SettingsPopup';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import api from '../../store/api';
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import axios from 'axios';
 
 function CMDLog() {
   const navigate = useNavigate();
@@ -112,10 +112,10 @@ function CMDLog() {
 
   const init = async () => {
     try {
-      const result = await api.get(`/v1/users`);
+      const result = await axios.get(`/v1/users`);
       const userInfo = result.data;
-      setUserIcon(userInfo.emojiCode);
-      setUserStatus(userInfo.status);
+      setUserIcon(userInfo.emojiCode || 0);
+      setUserStatus(userInfo.status || 'online');
       if(userInfo.settings?.backgroundColor) {
         setBackgroundColor(userInfo.settings.backgroundColor);
       }
@@ -209,7 +209,7 @@ function CMDLog() {
 
   const getAllLogs = async () => {
     try {
-      const result = await api.get(`/v1/logs/all`);
+      const result = await axios.get(`/v1/logs/all`);
       setLogs(result.data.logs);
     } catch (error) {
       console.error('Error fetching logs:', error);

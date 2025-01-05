@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './SettingsPopup.css';
-import api from '../../store/api';
+import axios from 'axios';
 
 function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -29,7 +29,7 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
 
   const save = async (requestData) => {
     try {
-      await api.put(`/v1/settings`, requestData);
+      await axios.put(`/v1/settings`, requestData);
     } catch (error) {
       console.error('Failed to save', error);
       if(error.message === 'Network Error'){
@@ -40,7 +40,7 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
 
   const logout = async () => {
     try {
-      await api.post(`/v1/users/logout`);
+      await axios.post(`/v1/users/logout`);
       navigate('/login');
     } catch (error) {
       console.error('Failed to logout', error);
