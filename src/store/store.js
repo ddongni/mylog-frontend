@@ -15,6 +15,10 @@ const store = configureStore({
   reducer: {
     user: persistedReducer, // persistReducer로 감싼 reducer 사용
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // 직렬화 검사 비활성화
+    }),
 });
 
 export const persistor = persistStore(store); // Redux 상태를 persist

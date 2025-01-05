@@ -9,7 +9,9 @@ module.exports = {
     },
     devtool: false,
     devServer: {
-        host: '0.0.0.0',
-        allowedHosts: 'all'
+        disableHostCheck: true
     },
+    resolve: {
+        symlinks: true
+    }
 };
