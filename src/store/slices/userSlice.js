@@ -4,9 +4,13 @@ import api from '../api';
 export const updateNickname = createAsyncThunk(
     'user/updateNickname',
     async (nickname) => {
+      try {
         const requestData = { nickname: nickname };
         const { data } = await api.put(`/v1/users/nickname`, requestData);
         return data;
+      } catch (error) {
+        throw error;
+      }
     }
 );
 
