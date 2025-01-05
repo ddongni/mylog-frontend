@@ -1,15 +1,32 @@
 const statusOptions = [
-    'smiling', 'laughing', 'thinking', 'relaxing', 'crying', 'angry',
+    // 감정 표현
+    'smiling', 'laughing', 'thinking', 'relaxing', 'crying', 'angry', 
+    'happy', 'sad', 'excited', 'bored', 'nervous', 
+    'grateful', 'curious', 'shocked', 'confused', 'proud', 'hopeful',
 
-    'working', 'studying', 'coding', 'typing', 
+    // 작업 관련
+    'working', 'studying', 'coding', 'typing', 'designing', 
+     'meeting', 'planning', 'analyzing',
 
-    'chatting', 'traveling', 'shopping', 'cleaning', 'cooking',
+    // 일상 생활
+    'chatting', 'traveling', 'shopping', 'cleaning', 'cooking', 
+    
 
-    'walking', 'running', 'exercising', 'swimming', 'hiking', 'gardening',
+    // 운동
+    'walking', 'running', 'exercising', 'swimming', 'hiking', 
+    'dancing', 
+    
+    // 여가 및 취미
+    'gaming', 'painting', 'fishing', 'reading', 'writing', 
+    'filming', 'singing', 'knitting', 'sewing', 'crafting', 
+    'drawing',
 
-    'gaming', 'painting', 'fishing',
+    // 온라인 활동
+    'online', 'gaming', 'chatting',
 
-    'online', 'sleeping', 'showering', 'dancing', 'eating', 'drinking',
+    // 휴식 및 건강
+    'sleeping', 'showering', 'eating', 'drinking', 'relaxing',
+     'healing', 
 ];
 
 export default statusOptions;
