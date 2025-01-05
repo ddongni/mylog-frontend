@@ -219,8 +219,6 @@ function CMDLog() {
   };
 
   const updateLog = () => {
-    // TODO: 사용자한테 한번더 확인
-
     if (!client.current || !client.current?.connected) {
       console.log("Failed to send a message. Please try again.");
       return;
@@ -241,19 +239,19 @@ function CMDLog() {
       // animateText(newEntry);
       return newLogs;
     });
-
+  
+    // WebSocket 메시지 전송
     if (client.current) {
       client.current.send(
         "/pub/message",
-        {
-          "Content-Type": "application/json;charset=UTF-8"
-        },
+        { "Content-Type": "application/json;charset=UTF-8" },
         JSON.stringify(newEntry)
       );
     } else {
       console.log("Failed to send a message. Please try again.");
     }
   };
+  
 
   return (
     <div className="mylogApp" style={{ backgroundColor: backgroundColor, color: textColor }}>

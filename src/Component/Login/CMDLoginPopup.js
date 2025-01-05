@@ -10,8 +10,8 @@ function CMDLoginPopup() {
 
   return (
     <div className="login-popup">
-      <h2 className="cmd-title">Login</h2>
       <div className="login-content">
+        <h3>Simplify your day, log yourself.</h3>
         <button className="cmd-button" onClick={handleLogin}>
           Login
         </button>
