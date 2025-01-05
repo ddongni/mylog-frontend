@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './CMDLoginPopup.css';
+import { useDispatch } from 'react-redux';
+import { setNickname } from '../../store/slices/userSlice';
 
 function CMDLoginPopup() {
+  const dispatch = useDispatch();
+
   const serverUrl = process.env.REACT_APP_SERVER_URL;
 
   const handleLogin = () => {
     window.location.href = serverUrl + '/oauth2/authorization/google';
   };
+
+  useEffect(() => {
+    const updateNickname = async () => {
+      await dispatch(setNickname(null));
+    };
+
+    updateNickname();
+  }, [dispatch]);
 
   return (
     <div className="login-popup">

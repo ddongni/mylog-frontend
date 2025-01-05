@@ -32,6 +32,21 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
       await api.put(`/v1/settings`, requestData);
     } catch (error) {
       console.error('Failed to save', error);
+      if(error.message === 'Network Error'){
+        navigate('/login');
+      }
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await api.post(`/v1/users/logout`);
+      navigate('/login');
+    } catch (error) {
+      console.error('Failed to logout', error);
+      if(error.message === 'Network Error'){
+        navigate('/login');
+      }
     }
   };
 
@@ -87,7 +102,7 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
           ))}
           <div className='settings-buttons'>
             <button className='settings-button' onClick={() => navigate('/nickname')}>Change Nickname</button>
-            <button className='settings-button'>LogOut</button>
+            <button className='settings-button' onClick={logout}>LogOut</button>
           </div>
           
         </div>

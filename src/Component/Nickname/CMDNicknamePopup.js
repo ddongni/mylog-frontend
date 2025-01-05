@@ -18,8 +18,11 @@ function CMDNicknamePopup() {
       await dispatch(setNickname(inputValue));
       navigate('/');
     } catch (error) {
-      if(error?.message ==="Request failed with status code 409") {
+      if(error.message === 'Request failed with status code 409') {
         setErrorMassage('nickname is already taken');
+      }
+      if(error.message === 'Network Error'){
+        navigate('/login');
       }
     }
   };

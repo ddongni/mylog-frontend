@@ -78,16 +78,12 @@ function CMDLog() {
   // };
 
   useEffect(() => {
+    init();
+
     if(nickname === null) {
       navigate('/login');
     }
-  }, [navigate, nickname]);
 
-  useEffect(() => {
-    init();
-  }, []);
-
-  useEffect(() => {
     const interval = setInterval(() => {
       setLogs((prevLogs) =>
         prevLogs.map((log) => ({
@@ -114,6 +110,9 @@ function CMDLog() {
       }
     } catch (error) {
       console.error('Error fetching user:', error);
+      if(error.message === 'Network Error'){
+        navigate('/login');
+      }
     }
   };
 
@@ -200,6 +199,9 @@ function CMDLog() {
       setLogs(result.data.logs);
     } catch (error) {
       console.error('Error fetching logs:', error);
+      if(error.message === 'Network Error'){
+        navigate('/login');
+      }
     }
   };
 
