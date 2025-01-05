@@ -135,7 +135,10 @@ function CMDLog() {
 
   useEffect(() => {
     init();
-    
+    setTimeout(() => {
+      logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 1500);
+
     if(nickname === null) {
       navigate('/login');
     }
@@ -146,15 +149,14 @@ function CMDLog() {
           ...log,
           elapsedTime: getElapsedTime(log.updatedAt),
         }))
-        
       );
-      logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 1000);
-  
+    
     return () => clearInterval(interval);
     
   }, []);
 
+  
   const init = async () => {
     try {
       const result = await axios.get(`/v1/users`);
