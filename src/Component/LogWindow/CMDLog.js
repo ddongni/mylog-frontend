@@ -135,7 +135,7 @@ function CMDLog() {
 
   useEffect(() => {
     init();
-    logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    
     if(nickname === null) {
       navigate('/login');
     }
@@ -146,10 +146,13 @@ function CMDLog() {
           ...log,
           elapsedTime: getElapsedTime(log.updatedAt),
         }))
+        
       );
+      logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 1000);
   
     return () => clearInterval(interval);
+    
   }, []);
 
   const init = async () => {
@@ -330,7 +333,7 @@ function CMDLog() {
             {log.animatedText || `${log.nickname} | ${log.status} | ${getElapsedTime(log.updatedAt)}`}
             </div>
           ))}
-          <div ref={logEndRef}></div>
+          
           <div className="input-prompt">
             <span className="input-pointer">&gt;</span>
             <span className="icon" onClick={() => setShowIconPicker(true)}>
@@ -343,6 +346,7 @@ function CMDLog() {
             </button>
             <div className="blinking-cursor" style={{backgroundColor: textColor}}></div>
           </div>
+          
         </div>
 
           {showIconPicker && (
@@ -391,6 +395,7 @@ function CMDLog() {
                 
               </div>
           )}
+          <div ref={logEndRef}></div>
         </div>
       </div>
   );
