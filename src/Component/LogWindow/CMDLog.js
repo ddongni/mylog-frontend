@@ -285,7 +285,7 @@ function CMDLog() {
             <img src={icons[userIcon]?.url} alt={userIcon} />
           </span>
           {nickname || 'Guest'} | {' '}
-          <span onClick={() => setShowStatusPicker(true)}>{userStatus}</span>{' '}
+          <span className="status" onClick={() => setShowStatusPicker(true)}>{userStatus}</span>
           <button className="common-button" onClick={updateLog}>
             Add to Log
           </button>
