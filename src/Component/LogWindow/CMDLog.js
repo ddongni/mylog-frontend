@@ -142,7 +142,7 @@ function CMDLog() {
             {person.animatedText || `${person.name} | ${person.status} | ${formatElapsedTime(person.elapsedTime)}`}
           </div>
         ))}
-        <div ref={logEndRef}></div>
+        {/* <div ref={logEndRef}></div> */}
         <div className="input-prompt">
           <span className="input-pointer">&gt;</span>
           <span className="icon" onClick={() => setShowIconPicker(true)}>
@@ -158,7 +158,6 @@ function CMDLog() {
       </div>
 
       {showIconPicker && (
-        <div className="popup">
           <div className="popup-content">
             <h3>Select an Icon</h3>
             <div className="icon-grid">
@@ -179,11 +178,9 @@ function CMDLog() {
               Close
             </button>
           </div>
-        </div>
       )}
 
       {showStatusPicker && (
-        <div className="popup">
           <div className="popup-content">
             <h3>Select a Status</h3>
             <div className="status-grid">
@@ -204,7 +201,6 @@ function CMDLog() {
               Close
             </button>
           </div>
-        </div>
       )}
     </div>
   );
