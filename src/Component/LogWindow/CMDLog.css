@@ -1,18 +1,44 @@
 .mylogApp {
-  position: absolute;
-  top: 5%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  width: 40%; /* 폭을 화면의 50%로 설정 */
+  display: flex;
+  flex-direction: column;
+  position: fixed; /* 화면 기준으로 고정 */
+  top: 50%; /* 화면 세로 중앙 */
+  left: 50%; /* 화면 가로 중앙 */
+  transform: translate(-50%, -50%); /* 정확히 중앙으로 정렬 */
+  width: 40%; /* 폭을 화면의 40%로 설정 */
   height: 80%;
   padding: 20px;
-    border: 1px solid lime;
+  border: 1px solid lime;
   border-radius: 3px;
   background-color: #000;
   box-shadow: 0 0 15px lime;
-  overflow-y: auto; 
+  overflow-y: auto;
   overflow-x: hidden; /* 가로 스크롤 비활성화 */
-  z-index: 50;
+  z-index: 1000; /* 다른 요소보다 위에 표시 */
+}
+
+.popup-content {
+  position: fixed; /* 화면 기준으로 고정 */
+  top: 50%; /* 화면 세로 중앙 */
+  left: 50%; /* 화면 가로 중앙 */
+  transform: translate(-50%, -50%); /* 중앙 정렬 */
+  background-color: black;
+  border: 1px solid lime;
+  border-radius: 3px;
+  padding: 20px;
+  box-shadow: 0 0 10px lime;
+  max-width: 70vw; /* 최대 너비를 500px로 제한 */
+  max-height: 70vh; /* 화면 높이의 80%로 설정 */
+  overflow-y: auto;
+  z-index: 9999; /* 다른 모든 요소 위에 표시 */
+}
+
+.popup-content h3 {
+  font-size: 1.5rem; /* 텍스트 크기 */
+  color: lime; /* 텍스트 색상 */
+  text-align: center; /* 중앙 정렬 */
+  margin-bottom: 20px; /* 아래 간격 */
+  margin-top: 20px; /* 상단 간격 */
 }
 
 .log-entry {
@@ -58,23 +84,6 @@
   50% {
     opacity: 0;
   }
-}
-
-.popup-content {
-  position: fixed; /* 뷰포트를 기준으로 고정 */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* 정확히 중앙으로 정렬 */
-  background-color: black;
-  border: 1px solid lime;
-  border-radius: 3px;
-  padding: 10px;
-  box-shadow: 0 0 10px lime;
-  width: 90%;
-  max-height: 80%;
-  overflow-y: auto;
-  text-align: center;
-  z-index: 1000; /* 다른 요소보다 위에 표시 */
 }
 
 

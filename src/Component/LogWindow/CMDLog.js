@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import axios from 'axios';
+import ReactDOM from 'react-dom';
 
 function CMDLog() {
   const navigate = useNavigate();
@@ -317,89 +318,94 @@ function CMDLog() {
 
   return (
     <div>
-      <div className="mylogApp" style={{ backgroundColor: backgroundColor, color: textColor }}>
-        <SettingsPopup onChangeBackgroundColor={setBackgroundColor} onChangeTextColor={setTextColor} />
-        <div className="log">
-            <div className="log-entry">
+    <div className="mylogApp" style={{ backgroundColor: backgroundColor, color: textColor }}>
+      {/* 메인 컨텐츠 */}
+      <SettingsPopup onChangeBackgroundColor={setBackgroundColor} onChangeTextColor={setTextColor} />
+      <div className="log">
+        <div className="log-entry">
+          <span className="icon">
+            <img src="/mylog-admin.png" alt="dummy-icon" />
+          </span>
+          {dummyData.nickname} | {dummyData.status} | {getElapsedTime(dummyData.updatedAt, true)}
+        </div>
+        {logs.map((log, index) => (
+          <div key={index} className="log-entry">
             <span className="icon">
-              <img src="/mylog-admin.png" alt="dummy-icon" />
+              <img src={icons[log.emojiCode]?.url} alt={log.emojiCode} />
             </span>
-            {dummyData.nickname} | {dummyData.status} | {getElapsedTime(dummyData.updatedAt, true)}
-        </div>
-          <div style={{height:'1000px'}}></div>
-          {logs.map((log, index) => (
-            <div key={index} className="log-entry">
-              <span className="icon">
-                <img src={icons[log.emojiCode]?.url} alt={log.emojiCode} />
-              </span>
             {log.animatedText || `${log.nickname} | ${log.status} | ${getElapsedTime(log.updatedAt)}`}
-            </div>
-          ))}
-          
-          <div className="input-prompt">
-            <span className="input-pointer">&gt;</span>
-            <span className="icon" onClick={() => setShowIconPicker(true)}>
-              <img src={icons[userIcon]?.url} alt={userIcon} />
-            </span>
-            {nickname || 'Guest'} | {' '}
-            <span className="status" onClick={() => setShowStatusPicker(true)}>{userStatus}</span>
-            <button className="common-button" onClick={updateLog}>
-              Add to Log
-            </button>
-            <div className="blinking-cursor" style={{backgroundColor: textColor}}></div>
           </div>
-          
-        </div>
-
-          {showIconPicker && (
-              <div className="popup-content">
-                <h3>Select an Icon</h3>
-                <div className="icon-grid">
-                  {Object.entries(icons).map(([key, icon], index) => (
-                    <div
-                      key={index}
-                      className="icon-option"
-                      onClick={() => {
-                        selectIcon(index);
-                        setShowIconPicker(false);
-                      }}
-                    >
-                      <img src={icon.url} alt={key} className="icon-image" />
-                    </div>
-                  ))}
-                </div>
-                <button className="close-button" onClick={() => setShowIconPicker(false)}>
-                  Close
-                </button>
-              </div>
-          )}
-
-          {showStatusPicker && (
-              <div className="popup-content">
-                <h3>Select a Status</h3>
-                <button className="close-button" onClick={() => setShowStatusPicker(false)}>
-                  Close
-                </button>
-                <div className="status-grid">
-                  {statusOptions.map((status, index) => (
-                    <div
-                      key={index}
-                      className="status-option"
-                      onClick={() => {
-                        selectStatus(status);
-                        setShowStatusPicker(false);
-                      }}
-                    >
-                      {status}
-                    </div>
-                  ))}
-                </div>
-                
-              </div>
-          )}
-          <div ref={logEndRef}></div>
+        ))}
+        <div className="input-prompt">
+          <span className="input-pointer">&gt;</span>
+          <span className="icon" onClick={() => setShowIconPicker(true)}>
+            <img src={icons[userIcon]?.url} alt={userIcon} />
+          </span>
+          {nickname || 'Guest'} |{' '}
+          <span className="status" onClick={() => setShowStatusPicker(true)}>
+            {userStatus}
+          </span>
+          <button className="common-button" onClick={updateLog}>
+            Add to Log
+          </button>
+          <div className="blinking-cursor" style={{ backgroundColor: textColor }}></div>
         </div>
       </div>
+    </div>
+
+    {/* Icon Picker Popup */}
+    {showIconPicker &&
+      ReactDOM.createPortal(
+        <div className="popup-content">
+          <h3>Select an Icon</h3>
+          <div className="icon-grid">
+            {Object.entries(icons).map(([key, icon], index) => (
+              <div
+                key={index}
+                className="icon-option"
+                onClick={() => {
+                  selectIcon(index);
+                  setShowIconPicker(false);
+                }}
+              >
+                <img src={icon.url} alt={key} className="icon-image" />
+              </div>
+            ))}
+          </div>
+          <button className="close-button" onClick={() => setShowIconPicker(false)}>
+            Close
+          </button>
+        </div>,
+        document.body
+      )}
+
+    {/* Status Picker Popup */}
+    {showStatusPicker &&
+      ReactDOM.createPortal(
+        <div className="popup-content">
+          <h3>Select a Status</h3>
+          <div className="status-grid">
+            {statusOptions.map((status, index) => (
+              <div
+                key={index}
+                className="status-option"
+                onClick={() => {
+                  selectStatus(status);
+                  setShowStatusPicker(false);
+                }}
+              >
+                {status}
+              </div>
+            ))}
+          </div>
+          <button className="close-button" onClick={() => setShowStatusPicker(false)}>
+            Close
+          </button>
+        </div>,
+        document.body
+      )}
+  </div>
+
   );
 }
 
