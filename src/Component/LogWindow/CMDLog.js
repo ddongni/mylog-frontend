@@ -159,7 +159,7 @@ function CMDLog() {
   
   const init = async () => {
     try {
-      const result = await axios.get(`/v1/users`);
+      const result = await axios.get(`/v1/users/init`);
       const userInfo = result.data;
       setUserIcon(userInfo.emojiCode || 0);
       setUserStatus(userInfo.status || 'online');
