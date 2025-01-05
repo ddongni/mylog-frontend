@@ -11,6 +11,8 @@
   box-shadow: 0 0 15px lime;
   text-align: center;
   z-index: 100;
+  align-items: center;
+  
 }
 
 .cmd-title {
@@ -19,9 +21,9 @@
 }
 
 .login-content {
-  display: flex;
   flex-direction: column;
   gap: 10px;
+  
 }
 
 .cmd-input {
@@ -36,13 +38,15 @@
 
 .cmd-button {
   padding: 10px;
+  width: 30vw;
   border: 1px solid lime;
   border-radius: 3px;
   background-color: black;
   color: lime;
   cursor: pointer;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 16px;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .cmd-button:hover {
