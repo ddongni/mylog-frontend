@@ -12,4 +12,7 @@ module.exports = {
         host: '0.0.0.0',
         allowedHosts: 'all'
     },
+    resolve: {
+        symlinks: true
+    }
 };
