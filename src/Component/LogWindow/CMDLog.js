@@ -33,7 +33,7 @@ function CMDLog() {
   const [userIcon, setUserIcon] = useState(0);
   const [showIconPicker, setShowIconPicker] = useState(false);
   const [showStatusPicker, setShowStatusPicker] = useState(false);
-  const [logColor, setLogColor] = useState('#000');
+  const [backgroundColor, setBackgroundColor] = useState('#000');
   const [textColor, setTextColor] = useState('lime');
   const logEndRef = useRef(null);
   const { nickname } = useSelector((state) => state.user);
@@ -104,6 +104,12 @@ function CMDLog() {
       const userInfo = result.data;
       setUserIcon(userInfo.emojiCode);
       setUserStatus(userInfo.status);
+      if(userInfo.settings.backgroundColor) {
+        setBackgroundColor(userInfo.settings.backgroundColor);
+      }
+      if(userInfo.settings.textColor) {
+        setTextColor(userInfo.settings.textColor);
+      }
     } catch (error) {
       console.error('Error fetching user:', error);
     }
@@ -245,8 +251,8 @@ function CMDLog() {
   };
 
   return (
-    <div className="mylogApp" style={{ backgroundColor: logColor, color: textColor }}>
-      <SettingsPopup onChangeBackgroundColor={setLogColor} onChangeTextColor={setTextColor} />
+    <div className="mylogApp" style={{ backgroundColor: backgroundColor, color: textColor }}>
+      <SettingsPopup onChangeBackgroundColor={setBackgroundColor} onChangeTextColor={setTextColor} />
       <div className="log">
         {logs.map((log, index) => (
           <div key={index} className="log-entry">
