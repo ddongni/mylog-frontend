@@ -36,30 +36,11 @@ function CMDLog() {
   const [logColor, setLogColor] = useState('#000');
   const [textColor, setTextColor] = useState('lime');
   const logEndRef = useRef(null);
-  // const nextId = useRef(3);
   const { nickname } = useSelector((state) => state.user);
 
   useEffect(() => {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, );
-
-  const addUserToLog = () => {
-    const newEntry = {
-      id: nextId.current++,
-      name: nickname || 'Guest',
-      status: userStatus,
-      icon: userIcon,
-      elapsedTime: 0,
-      lastUpdated: Date.now(),
-      animatedText: '',
-    };
-
-    setPeople((prevPeople) => {
-      const updatedPeople = [...prevPeople, newEntry];
-      animateText(newEntry);
-      return updatedPeople;
-    });
-  };
 
   const animateText = (entry) => {
     const fullText = `${entry.nickname} | ${entry.status} | ${formatElapsedTime(entry.elapsedTime)}`;
