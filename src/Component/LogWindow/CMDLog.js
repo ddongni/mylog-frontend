@@ -273,7 +273,7 @@ function CMDLog() {
           <button className="common-button" onClick={updateLog}>
             Add to Log
           </button>
-          <div className="blinking-cursor"></div>
+          <div className="blinking-cursor" style={{backgroundColor: textColor}}></div>
         </div>
       </div>
 
