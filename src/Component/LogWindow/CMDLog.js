@@ -174,7 +174,7 @@ function CMDLog() {
                 </div>
               ))}
             </div>
-            <button className="common-button" onClick={() => setShowIconPicker(false)}>
+            <button className="close-button" onClick={() => setShowIconPicker(false)}>
               Close
             </button>
           </div>
@@ -183,6 +183,9 @@ function CMDLog() {
       {showStatusPicker && (
           <div className="popup-content">
             <h3>Select a Status</h3>
+            <button className="close-button" onClick={() => setShowStatusPicker(false)}>
+              Close
+            </button>
             <div className="status-grid">
               {statusOptions.map((status, index) => (
                 <div
@@ -197,9 +200,7 @@ function CMDLog() {
                 </div>
               ))}
             </div>
-            <button className="common-button" onClick={() => setShowStatusPicker(false)}>
-              Close
-            </button>
+            
           </div>
       )}
     </div>
