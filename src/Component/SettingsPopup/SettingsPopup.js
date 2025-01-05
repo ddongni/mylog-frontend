@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import './SettingsPopup.css';
+import api from '../../store/api';
 
 function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -26,6 +27,14 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
     { name: 'Yellow', value: '#FFFF00' },
   ];
 
+  const save = async (requestData) => {
+    try {
+      await api.put(`/v1/settings`, requestData);
+    } catch (error) {
+      console.error('Failed to save', error);
+    }
+  };
+
   return (
     <div>
       <button className="hamburger-button" onClick={toggleSettings}>
@@ -46,6 +55,7 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
               key={color.value}
               className="color-option"
               onClick={() => {
+                save({ backgroundColor: color.value });
                 onChangeBackgroundColor(color.value);
                 setIsSettingsOpen(false);
               }}
@@ -63,6 +73,7 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
               key={color.value}
               className="color-option"
               onClick={() => {
+                save({ textColor: color.value });
                 onChangeTextColor(color.value);
                 setIsSettingsOpen(false);
               }}
