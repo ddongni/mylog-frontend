@@ -8,10 +8,6 @@ module.exports = {
         minimizer: [new TerserPlugin]
     },
     devtool: false,
-    devServer: {
-        host: '0.0.0.0',
-        allowedHosts: 'all', // 모든 도메인 허용
-    },
     resolve: {
         symlinks: true
     }
