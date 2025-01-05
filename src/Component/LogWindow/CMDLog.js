@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../store/api';
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import { now } from 'three/examples/jsm/libs/tween.module.js';
 
 function CMDLog() {
   const navigate = useNavigate();
@@ -22,16 +21,53 @@ function CMDLog() {
   const logEndRef = useRef(null);
   const { nickname } = useSelector((state) => state.user);
 
-  const getElapsedTime = (updatedAt) => {
+  const dummyData = {
+    nickname: "mylog",
+    status: "in operation",
+    updatedAt: "2025-01-04T07:00:00.000Z", // 올바른 ISO 시간
+  };
+
+  const getElapsedTime = (updatedAt, isDummy = false) => {
     const updatedDate = new Date(updatedAt + 'Z');
     const nowUtc = new Date();
     
+     // 더미 데이터일 경우 특별 처리
+  if (isDummy) {
+    const updatedDate = new Date(updatedAt);
+    const nowUtc = new Date();
+
+    const diffMs = nowUtc.getTime() - updatedDate.getTime();
+
+    if (diffMs < 0) {
+      return "0 s"; // 음수 값 방지
+    }
+
+    const diffSeconds = Math.floor(diffMs / 1000) % 60;
+    const diffMinutes = Math.floor(diffMs / (1000 * 60)) % 60;
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60)) % 24;
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    if (diffDays > 0) {
+      return `${diffDays} d ${diffHours} h`;
+    } else if (diffHours > 0) {
+      return `${diffHours} h ${diffMinutes} m`;
+    } else if (diffMinutes > 0) {
+      return `${diffMinutes} m ${diffSeconds} s`;
+    } else {
+      return `${diffSeconds} s`;
+    }
+  }
+
     //시간 테스트하기 위한 코드임
     // nowUtc.setSeconds(nowUtc.getSeconds() + 50); // 초 추가
     // nowUtc.setMinutes(nowUtc.getMinutes() + 59); // 분 추가
     // nowUtc.setHours(nowUtc.getHours() + 23); // 시간 추가
 
     const diffMs = nowUtc.getTime() - updatedDate.getTime();
+
+    if (isNaN(diffMs)) {
+      return "Invalid time"; // 계산 오류 방지
+    }
   
     const diffSeconds = Math.floor(diffMs / 1000) % 60; // 초 단위의 나머지 값 계산
     const diffMinutes = Math.floor(diffMs / (1000 * 60)) % 60; // 분 단위의 나머지 값 계산
@@ -49,6 +85,8 @@ function CMDLog() {
     }
   };
   
+  
+
   useEffect(() => {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, );
@@ -279,6 +317,12 @@ function CMDLog() {
     <div className="mylogApp" style={{ backgroundColor: backgroundColor, color: textColor }}>
       <SettingsPopup onChangeBackgroundColor={setBackgroundColor} onChangeTextColor={setTextColor} />
       <div className="log">
+          <div className="log-entry">
+          <span className="icon">
+            <img src="/mylog-admin.png" alt="dummy-icon" />
+          </span>
+          {dummyData.nickname} | {dummyData.status} | {getElapsedTime(dummyData.updatedAt, true)}
+      </div>
         {logs.map((log, index) => (
           <div key={index} className="log-entry">
             <span className="icon">
