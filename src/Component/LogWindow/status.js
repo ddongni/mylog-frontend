@@ -1,10 +1,15 @@
 const statusOptions = [
-    'online', 'chatting', 'typing', 'smiling', 'laughing', 'thinking',
-    'working', 'studying', 'coding', 'cleaning', 'shopping',
-    'eating', 'drinking', 'cooking', 'traveling', 'driving', 
-    'walking', 'running', 'exercising', 'swimming', 'hiking',
-    'gardening', 'painting', 'gaming', 'fishing', 
-    'sleeping', 'relaxing', 'crying', 'angry', 'showering', 'dancing',
+    'smiling', 'laughing', 'thinking', 'relaxing', 'crying', 'angry',
+
+    'working', 'studying', 'coding', 'typing', 
+
+    'chatting', 'traveling', 'shopping', 'cleaning', 'cooking',
+
+    'walking', 'running', 'exercising', 'swimming', 'hiking', 'gardening',
+
+    'gaming', 'painting', 'fishing',
+
+    'online', 'sleeping', 'showering', 'dancing', 'eating', 'drinking',
 ];
 
 export default statusOptions;

@@ -31,13 +31,13 @@ function CMDLog() {
     const diffDays = Math.floor(diffHours / 24);
   
     if (diffSeconds < 60) {
-      return `${diffSeconds} seconds elapsed`;
+      return `${diffSeconds} s`;
     } else if (diffMinutes < 60) {
-      return `${diffMinutes} minutes elapsed`;
+      return `${diffMinutes} m `;
     } else if (diffHours < 24) {
-      return `${diffHours} hours elapsed`;
+      return `${diffHours} h `;
     } else {
-      return `${diffDays} days elapsed`;
+      return `${diffDays} d`;
     }
   };
 
@@ -45,37 +45,50 @@ function CMDLog() {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, );
 
-  // const animateText = (entry) => {
-  //   const fullText = `${entry.nickname} | ${entry.status} | ${getElapsedTime(entry.updatedAt)}`;
-  //   let currentIndex = 0;
-
-  //   const interval = setInterval(() => {
-  //     setLogs((prevLog) => {
-        // if (!Array.isArray(prevLog)) {
-          // console.error("prevLog is not an array:", prevLog);
-          // return prevLog || [];
-        // }
-      //   return prevLog.map((log) =>
-      //     log.nickname === entry.nickname && log.id === entry.id
-      //       ? { ...log, animatedText: fullText.slice(0, currentIndex + 1) }
-      //       : log
-      //   );
-      // });
-
-      // currentIndex++;
-
-      // if (currentIndex >= fullText.length) {
-      //   clearInterval(interval);
-        // setLogs((prevLog) =>
-        //   prevLog.map((log) =>
-        //     log.id === entry.id
-        //       ? { ...log, animatedText: '', updatedAt: Date.now() }
-        //       : log
-        //   )
-        // );
-      // }
-    // }, 50);
-  // };
+  const animateText = (entry) => {
+    const fullText = `${entry.nickname} | ${entry.status} | ${getElapsedTime(entry.updatedAt)}`;
+    let currentIndex = 0;
+  
+    const interval = setInterval(() => {
+      setLogs((prevLog) =>
+        prevLog.map((log) =>
+          log.nickname === entry.nickname
+            ? { ...log, animatedText: fullText.slice(0, currentIndex + 1) }
+            : log
+        )
+      );
+  
+      currentIndex++;
+  
+      if (currentIndex >= fullText.length) {
+        clearInterval(interval);
+  
+        // 애니메이션이 끝난 후 elapsedTime 업데이트 복원
+        setLogs((prevLog) =>
+          prevLog.map((log) =>
+            log.nickname === entry.nickname
+              ? { ...log, animatedText: null } // animatedText 제거
+              : log
+          )
+        );
+      }
+    }, 50);
+  };
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLogs((prevLogs) =>
+        prevLogs.map((log) =>
+          log.animatedText
+            ? log // 애니메이션 중인 항목은 무시
+            : { ...log, elapsedTime: getElapsedTime(log.updatedAt) }
+        )
+      );
+    }, 1000);
+  
+    return () => clearInterval(interval);
+  }, []);
+  
 
   useEffect(() => {
     init();
@@ -158,7 +171,7 @@ function CMDLog() {
                   } else {
                     // 닉네임이 다른 경우 새 로그 추가
                     const updatedLog = [...prevLog, newLog];
-                    // animateText(newLog); // 새 로그 추가 시 애니메이션 실행
+                    animateText(newLog); // 새 로그 추가 시 애니메이션 실행
                     return updatedLog;
                   }
                 });
@@ -238,7 +251,7 @@ function CMDLog() {
     setLogs((prevLog) => {
       const updatedLog = prevLog.filter((log) => log.nickname !== newEntry.nickname);
       const newLogs = [...updatedLog, newEntry];
-      // animateText(newEntry);
+      animateText(newEntry);
       return newLogs;
     });
   
@@ -274,7 +287,7 @@ function CMDLog() {
             <img src={icons[userIcon]?.url} alt={userIcon} />
           </span>
           {nickname || 'Guest'} | {' '}
-          <span onClick={() => setShowStatusPicker(true)}>{userStatus}</span>{' '}
+          <span className="status" onClick={() => setShowStatusPicker(true)}>{userStatus}</span>
           <button className="common-button" onClick={updateLog}>
             Add to Log
           </button>

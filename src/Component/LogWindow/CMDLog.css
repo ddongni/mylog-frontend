@@ -133,6 +133,10 @@
   font-size: 16px;
 }
 
+.status {
+  margin-left: 0.5em;
+}
+
 .icon-option:hover, .status-option:hover {
   background-color: lime;
   color: black;
@@ -145,7 +149,7 @@
     border: 1px solid lime;
   border-radius: 3px;
   color: lime;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   margin-left: 10px;
 }
