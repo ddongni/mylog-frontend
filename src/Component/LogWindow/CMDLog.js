@@ -45,29 +45,29 @@ function CMDLog() {
   const animateText = (entry) => {
     const fullText = `${entry.nickname} | ${entry.status} | ${formatElapsedTime(entry.elapsedTime)}`;
     let currentIndex = 0;
-
+  
     const interval = setInterval(() => {
-      setLogs((prevLog) =>
-        prevLog.map((log) =>
-          log.id === entry.id
+      setLogs((prevLogs) =>
+        prevLogs.map((log) =>
+          log.nickname === entry.nickname
             ? { ...log, animatedText: fullText.slice(0, currentIndex + 1) }
             : log
         )
       );
-
+  
       currentIndex++;
-
+  
       if (currentIndex >= fullText.length) {
         clearInterval(interval);
-        setLogs((prevLog) =>
-          prevLog.map((log) =>
-            log.id === entry.id
-              ? { ...log, animatedText: '', updatedAt: Date.now() }
+        setLogs((prevLogs) =>
+          prevLogs.map((log) =>
+            log.nickname === entry.nickname
+              ? { ...log, animatedText: '' }
               : log
           )
         );
       }
-    }, 50);
+    }, 50); // 애니메이션 속도
   };
 
   useEffect(() => {
@@ -215,40 +215,38 @@ function CMDLog() {
   };
 
   const updateLog = () => {
-    // TODO: 사용자한테 한번더 확인
-
     if (!client.current || !client.current?.connected) {
       console.log("Failed to send a message. Please try again.");
       return;
     }
-    // TODO: 유효성 검사
-
+  
     const newEntry = {
       nickname: nickname,
       emojiCode: userIcon,
       status: userStatus,
-      updatedAt: formatToLocalDateTime(Date.now())
+      updatedAt: Date.now(), // 현재 시간
     };
-
-    setLogs((prevLog) => {
-      const updatedLog = prevLog.filter((log) => log.nickname !== newEntry.nickname);
-      const newLogs = [...updatedLog, newEntry];
-      animateText(newEntry);
-      return newLogs;
+  
+    // 새 로그 추가 및 최신 로그에 애니메이션 적용
+    setLogs((prevLogs) => {
+      const filteredLogs = prevLogs.filter((log) => log.nickname !== newEntry.nickname);
+      const updatedLogs = [...filteredLogs, newEntry]; // 최신 로그를 배열의 마지막에 추가
+      animateText(newEntry); // 최신 로그에만 애니메이션 실행
+      return updatedLogs;
     });
-
+  
+    // WebSocket 메시지 전송
     if (client.current) {
       client.current.send(
         "/pub/message",
-        {
-          "Content-Type": "application/json;charset=UTF-8"
-        },
+        { "Content-Type": "application/json;charset=UTF-8" },
         JSON.stringify(newEntry)
       );
     } else {
       console.log("Failed to send a message. Please try again.");
     }
   };
+  
 
   return (
     <div className="mylogApp" style={{ backgroundColor: backgroundColor, color: textColor }}>
