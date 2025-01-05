@@ -22,26 +22,26 @@ function CMDLog() {
   const { nickname } = useSelector((state) => state.user);
 
   const getElapsedTime = (updatedAt) => {
-    const updatedDate = new Date(updatedAt+'Z');
+    const updatedDate = new Date(updatedAt + 'Z');
     const nowUtc = new Date();
     const diffMs = nowUtc.getTime() - updatedDate.getTime();
-
-    const diffSeconds = Math.floor(diffMs / 1000);
-    const diffMinutes = Math.floor(diffSeconds / 60);
-    const diffHours = Math.floor(diffMinutes / 60);
-    const diffDays = Math.floor(diffHours / 24);
   
-    if (diffSeconds < 60) {
-      return `${diffSeconds} s`;
-    } else if (diffMinutes < 60) {
-      return `${diffMinutes} m `;
-    } else if (diffHours < 24) {
-      return `${diffHours} h `;
+    const diffSeconds = Math.floor(diffMs / 1000) % 60; // 초 단위의 나머지 값 계산
+    const diffMinutes = Math.floor(diffMs / (1000 * 60)) % 60; // 분 단위의 나머지 값 계산
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60)) % 24; // 시간 단위의 나머지 값 계산
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24)); // 일 단위 계산
+  
+    if (diffDays > 0) {
+      return `${diffDays} d ${diffHours} h`;
+    } else if (diffHours > 0) {
+      return `${diffHours} h ${diffMinutes} m`;
+    } else if (diffMinutes > 0) {
+      return `${diffMinutes} m ${diffSeconds} s`;
     } else {
-      return `${diffDays} d`;
+      return `${diffSeconds} s`;
     }
   };
-
+  
   useEffect(() => {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, );
