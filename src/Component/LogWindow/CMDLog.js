@@ -77,6 +77,7 @@ function CMDLog() {
   }, [navigate, nickname]);
 
   useEffect(() => {
+    init();
     // const interval = setInterval(() => {
     //   setPeople((prevPeople) =>
     //     prevPeople.map((person) => {
@@ -96,6 +97,17 @@ function CMDLog() {
       // clearInterval(interval);
     }
   }, []);
+
+  const init = async () => {
+    try {
+      const result = await api.get(`/v1/users`);
+      const userInfo = result.data;
+      setUserIcon(userInfo.emojiCode);
+      setUserStatus(userInfo.status);
+    } catch (error) {
+      console.error('Error fetching user:', error);
+    }
+  };
 
   const connectSocket = useCallback(() => {
     const currentNickname = nickname;
