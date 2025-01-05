@@ -54,3 +54,17 @@
   background-color: lime;
   color: black;
 }
+
+.close-button {
+  position: absolute;
+  top: 10px; /* 팝업 내부 상단 */
+  right: 10px; /* 팝업 내부 오른쪽 */
+  background-color: black;
+  border: 1px solid lime;
+  border-radius: 3px;
+  color: lime;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}

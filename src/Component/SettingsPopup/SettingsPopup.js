@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import './SettingsPopup.css';
 
 function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-
+  const navigate = useNavigate();
+  
   const toggleSettings = () => {
     setIsSettingsOpen(!isSettingsOpen);
   };
@@ -29,6 +33,13 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
       </button>
       {isSettingsOpen && (
         <div className="settings-popup">
+          <button
+            className="close-button"
+            onClick={toggleSettings}
+          >
+            Close
+          </button>
+          
           <h3>Change Background Color</h3>
           {backgroundColors.map((color) => (
             <div
@@ -63,13 +74,11 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
               {color.name}
             </div>
           ))}
-          <button
-            className="cmd-button"
-            onClick={toggleSettings}
-            style={{ marginTop: '10px' }}
-          >
-            Close
-          </button>
+          <div className='settings-buttons'>
+            <button className='settings-button' onClick={() => navigate('/nickname')}>Change Nickname</button>
+            <button className='settings-button'>LogOut</button>
+          </div>
+          
         </div>
       )}
     </div>

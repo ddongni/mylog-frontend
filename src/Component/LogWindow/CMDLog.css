@@ -127,6 +127,8 @@
 }
 
 .common-button {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
   background-color: black;
     border: 1px solid lime;
   border-radius: 3px;
@@ -146,6 +148,8 @@
   color: lime;
   font-size: 1rem;
   cursor: pointer;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
 }
 
 .icon img {

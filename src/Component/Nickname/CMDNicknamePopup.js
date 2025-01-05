@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import './CMDNicknamePopup.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { updateNickname, setNickname } from '../../store/slices/userSlice';
 
 function CMDNicknamePopup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   const [inputValue, setInputValue] = useState('');
   const [errorMassage, setErrorMassage] = useState('');
 
@@ -21,6 +23,8 @@ function CMDNicknamePopup() {
     }
   };
 
+  const userNickname = useSelector((state) => state.user.nickname);
+
   return (
     <div className="nickname-popup">
       <h2 className="cmd-title">Nickname</h2>
@@ -34,9 +38,14 @@ function CMDNicknamePopup() {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
+          {userNickname ? (
+            <button className="close-button" onClick={() => navigate('/')}>
+              Go Back
+            </button>
+          ) : null}
           <button className="cmd-button" onClick={handleConfirm}>
-            Confirm
-          </button>
+              Confirm
+            </button>
       </div>
     </div>
   );
