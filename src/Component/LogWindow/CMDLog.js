@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import './CMDLog.css';
 import icons from './icons';
@@ -320,7 +321,7 @@ function CMDLog() {
             </span>
             {dummyData.nickname} | {dummyData.status} | {getElapsedTime(dummyData.updatedAt, true)}
         </div>
-        
+          <div style={{height:'1000px'}}></div>
           {logs.map((log, index) => (
             <div key={index} className="log-entry">
               <span className="icon">

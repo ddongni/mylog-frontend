@@ -45,5 +45,5 @@
   "devDependencies": {
     "ajv": "^7.2.4"
   },
-  "proxy": "https://mysqlapi.broker.com"
+  "proxy": "http://localhost:6363"
 }
