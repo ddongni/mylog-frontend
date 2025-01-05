@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../store/api';
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import { now } from 'three/examples/jsm/libs/tween.module.js';
 
 function CMDLog() {
   const navigate = useNavigate();
@@ -24,6 +25,12 @@ function CMDLog() {
   const getElapsedTime = (updatedAt) => {
     const updatedDate = new Date(updatedAt + 'Z');
     const nowUtc = new Date();
+    
+    //시간 테스트하기 위한 코드임
+    // nowUtc.setSeconds(nowUtc.getSeconds() + 50); // 초 추가
+    // nowUtc.setMinutes(nowUtc.getMinutes() + 59); // 분 추가
+    // nowUtc.setHours(nowUtc.getHours() + 23); // 시간 추가
+
     const diffMs = nowUtc.getTime() - updatedDate.getTime();
   
     const diffSeconds = Math.floor(diffMs / 1000) % 60; // 초 단위의 나머지 값 계산
@@ -239,7 +246,6 @@ function CMDLog() {
       console.log("Failed to send a message. Please try again.");
       return;
     }
-    // TODO: 유효성 검사
 
     const now = Date.now();
     const newEntry = {
