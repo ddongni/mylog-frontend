@@ -7,5 +7,9 @@ module.exports = {
         minimize: true,
         minimizer: [new TerserPlugin]
     },
-    devtool: false
+    devtool: false,
+    devServer: {
+        host: '0.0.0.0',
+        allowedHosts: 'all'
+    },
 };
