@@ -5,7 +5,8 @@
   transform: translate(-50%, -50%); /* 정확히 중앙으로 정렬 */
   width: 250px;
   padding: 20px;
-  border: 1px solid lime;
+    border: 1px solid lime;
+  border-radius: 3px;
   background-color: black;
   color: lime;
   box-shadow: 0 0 10px lime;
@@ -25,7 +26,8 @@
     width: 20px;
     height: 20px;
     margin-right: 10px;
-    border: 1px solid lime;
+      border: 1px solid lime;
+  border-radius: 3px;
     cursor: pointer;
   }
   
@@ -36,7 +38,8 @@
     width: 30px;
     height: 30px;
     background-color: black;
-    border: 1px solid lime;
+      border: 1px solid lime;
+  border-radius: 3px;
     color: lime;
     font-size: 20px;
     cursor: pointer;

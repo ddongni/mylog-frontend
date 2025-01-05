@@ -49,7 +49,7 @@ function CMDLog() {
 
   useEffect(() => {
     logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [people]);
+  }, );
 
   const addUserToLog = () => {
     const newEntry = {
@@ -144,6 +144,7 @@ function CMDLog() {
         ))}
         <div ref={logEndRef}></div>
         <div className="input-prompt">
+          <span className="input-pointer">&gt;</span>
           <span className="icon" onClick={() => setShowIconPicker(true)}>
             <img src={icons[userIcon]} alt={userIcon} />
           </span>
