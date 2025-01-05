@@ -87,10 +87,6 @@ function CMDLog() {
   
   
 
-  useEffect(() => {
-    logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, );
-
   const animateText = (entry) => {
     const fullText = `${entry.nickname} | ${entry.status} | ${getElapsedTime(entry.updatedAt)}`;
     let currentIndex = 0;
@@ -138,7 +134,7 @@ function CMDLog() {
 
   useEffect(() => {
     init();
-
+    logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     if(nickname === null) {
       navigate('/login');
     }
@@ -314,85 +310,88 @@ function CMDLog() {
   
 
   return (
-    <div className="mylogApp" style={{ backgroundColor: backgroundColor, color: textColor }}>
-      <SettingsPopup onChangeBackgroundColor={setBackgroundColor} onChangeTextColor={setTextColor} />
-      <div className="log">
-          <div className="log-entry">
-          <span className="icon">
-            <img src="/mylog-admin.png" alt="dummy-icon" />
-          </span>
-          {dummyData.nickname} | {dummyData.status} | {getElapsedTime(dummyData.updatedAt, true)}
-      </div>
-        {logs.map((log, index) => (
-          <div key={index} className="log-entry">
+    <div>
+      <div className="mylogApp" style={{ backgroundColor: backgroundColor, color: textColor }}>
+        <SettingsPopup onChangeBackgroundColor={setBackgroundColor} onChangeTextColor={setTextColor} />
+        <div className="log">
+            <div className="log-entry">
             <span className="icon">
-              <img src={icons[log.emojiCode]?.url} alt={log.emojiCode} />
+              <img src="/mylog-admin.png" alt="dummy-icon" />
             </span>
-          {log.animatedText || `${log.nickname} | ${log.status} | ${getElapsedTime(log.updatedAt)}`}
+            {dummyData.nickname} | {dummyData.status} | {getElapsedTime(dummyData.updatedAt, true)}
+        </div>
+        
+          {logs.map((log, index) => (
+            <div key={index} className="log-entry">
+              <span className="icon">
+                <img src={icons[log.emojiCode]?.url} alt={log.emojiCode} />
+              </span>
+            {log.animatedText || `${log.nickname} | ${log.status} | ${getElapsedTime(log.updatedAt)}`}
+            </div>
+          ))}
+          <div ref={logEndRef}></div>
+          <div className="input-prompt">
+            <span className="input-pointer">&gt;</span>
+            <span className="icon" onClick={() => setShowIconPicker(true)}>
+              <img src={icons[userIcon]?.url} alt={userIcon} />
+            </span>
+            {nickname || 'Guest'} | {' '}
+            <span className="status" onClick={() => setShowStatusPicker(true)}>{userStatus}</span>
+            <button className="common-button" onClick={updateLog}>
+              Add to Log
+            </button>
+            <div className="blinking-cursor" style={{backgroundColor: textColor}}></div>
           </div>
-        ))}
-        {/* <div ref={logEndRef}></div> */}
-        <div className="input-prompt">
-          <span className="input-pointer">&gt;</span>
-          <span className="icon" onClick={() => setShowIconPicker(true)}>
-            <img src={icons[userIcon]?.url} alt={userIcon} />
-          </span>
-          {nickname || 'Guest'} | {' '}
-          <span className="status" onClick={() => setShowStatusPicker(true)}>{userStatus}</span>
-          <button className="common-button" onClick={updateLog}>
-            Add to Log
-          </button>
-          <div className="blinking-cursor" style={{backgroundColor: textColor}}></div>
+        </div>
+
+          {showIconPicker && (
+              <div className="popup-content">
+                <h3>Select an Icon</h3>
+                <div className="icon-grid">
+                  {Object.entries(icons).map(([key, icon], index) => (
+                    <div
+                      key={index}
+                      className="icon-option"
+                      onClick={() => {
+                        selectIcon(index);
+                        setShowIconPicker(false);
+                      }}
+                    >
+                      <img src={icon.url} alt={key} className="icon-image" />
+                    </div>
+                  ))}
+                </div>
+                <button className="close-button" onClick={() => setShowIconPicker(false)}>
+                  Close
+                </button>
+              </div>
+          )}
+
+          {showStatusPicker && (
+              <div className="popup-content">
+                <h3>Select a Status</h3>
+                <button className="close-button" onClick={() => setShowStatusPicker(false)}>
+                  Close
+                </button>
+                <div className="status-grid">
+                  {statusOptions.map((status, index) => (
+                    <div
+                      key={index}
+                      className="status-option"
+                      onClick={() => {
+                        selectStatus(status);
+                        setShowStatusPicker(false);
+                      }}
+                    >
+                      {status}
+                    </div>
+                  ))}
+                </div>
+                
+              </div>
+          )}
         </div>
       </div>
-
-      {showIconPicker && (
-          <div className="popup-content">
-            <h3>Select an Icon</h3>
-            <div className="icon-grid">
-              {Object.entries(icons).map(([key, icon], index) => (
-                <div
-                  key={index}
-                  className="icon-option"
-                  onClick={() => {
-                    selectIcon(index);
-                    setShowIconPicker(false);
-                  }}
-                >
-                  <img src={icon.url} alt={key} className="icon-image" />
-                </div>
-              ))}
-            </div>
-            <button className="close-button" onClick={() => setShowIconPicker(false)}>
-              Close
-            </button>
-          </div>
-      )}
-
-      {showStatusPicker && (
-          <div className="popup-content">
-            <h3>Select a Status</h3>
-            <button className="close-button" onClick={() => setShowStatusPicker(false)}>
-              Close
-            </button>
-            <div className="status-grid">
-              {statusOptions.map((status, index) => (
-                <div
-                  key={index}
-                  className="status-option"
-                  onClick={() => {
-                    selectStatus(status);
-                    setShowStatusPicker(false);
-                  }}
-                >
-                  {status}
-                </div>
-              ))}
-            </div>
-            
-          </div>
-      )}
-    </div>
   );
 }
 
