@@ -23,7 +23,8 @@ function CMDLog() {
 
   const getElapsedTime = (updatedAt) => {
     const updatedDate = new Date(updatedAt+'Z');
-    const diffMs = Date.now() - updatedDate.getTime();
+    const nowUtc = new Date();
+    const diffMs = nowUtc.getTime() - updatedDate.getTime();
 
     const diffSeconds = Math.floor(diffMs / 1000);
     const diffMinutes = Math.floor(diffSeconds / 60);
