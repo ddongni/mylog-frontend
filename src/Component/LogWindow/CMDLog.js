@@ -358,11 +358,13 @@ function CMDLog() {
           <span className="status" onClick={() => setShowStatusPicker(true)}>
             {userStatus}
           </span>
+          {loading?<div className="connecting" style={{ color: textColor }}>| Connecting...</div>:
+          <>
           <button className="common-button" onClick={updateLog}>
             Add to Log
           </button>
           <div className="blinking-cursor" style={{ backgroundColor: textColor }}></div>
-          {loading?<div id="loading" style={{ borderTop: "2px solid " + textColor }} class="loading-spinner"></div>:<></>}
+          </>}
         </div>
       </div>
     </div>
