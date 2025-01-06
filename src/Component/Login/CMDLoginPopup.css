@@ -3,7 +3,9 @@
   top: 40%;
   left: 50%;
   transform: translate(-50%, -20%);
-  width: 50vw;
+  width: 50vw; /* 기본 너비를 화면의 50%로 설정 */
+  max-width: 500px; /* 최대 너비를 500px로 제한 */
+  min-width: 300px; /* 최소 너비를 300px로 설정 */
   padding: 20px;
   border: 1px solid lime;
   border-radius: 3px;
@@ -12,18 +14,17 @@
   text-align: center;
   z-index: 100;
   align-items: center;
-  
+  overflow-x: hidden; /* 가로 스크롤 비활성화 */
 }
 
 .cmd-title {
-  font-size: 24px;
+  font-size: 1.5rem; /* 글자 크기를 반응형 단위로 설정 */
   margin-bottom: 20px;
 }
 
 .login-content {
   flex-direction: column;
   gap: 10px;
-  
 }
 
 .cmd-input {
@@ -33,12 +34,14 @@
   background-color: black;
   color: lime;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 16px;
+  font-size: 1rem; /* 글자 크기를 반응형 단위로 설정 */
 }
 
 .cmd-button {
   padding: 10px;
-  width: 30vw;
+  width: 30vw; /* 버튼 너비를 화면 비율로 설정 */
+  max-width: 300px; /* 버튼 최대 너비 제한 */
+  min-width: 150px; /* 버튼 최소 너비 설정 */
   border: 1px solid lime;
   border-radius: 3px;
   background-color: black;
@@ -46,7 +49,7 @@
   cursor: pointer;
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 1.125rem; /* 글자 크기를 반응형 단위로 설정 */
 }
 
 .cmd-button:hover {
@@ -57,46 +60,47 @@
 /* 반응형 스타일 */
 @media screen and (max-width: 768px) {
   .login-popup {
-    width: 60vw;
+    width: 90vw; /* 작은 화면에서는 팝업 너비를 화면의 90%로 설정 */
     padding: 15px;
     top: 40%; /* 상단 위치 조정 */
     transform: translate(-50%, -10%);
   }
 
   .cmd-title {
-    font-size: 20px; /* 제목 폰트 크기 축소 */
+    font-size: 1.25rem; /* 제목 폰트 크기 축소 */
   }
 
   .cmd-input {
-    font-size: 14px; /* 입력 필드 폰트 크기 축소 */
+    font-size: 0.9rem; /* 입력 필드 폰트 크기 축소 */
     padding: 8px;
   }
 
   .cmd-button {
-    font-size: 14px; /* 버튼 폰트 크기 축소 */
+    font-size: 1rem; /* 버튼 폰트 크기 축소 */
     padding: 8px;
   }
 }
 
 @media screen and (max-width: 480px) {
   .login-popup {
-    width: 60vw;
+    width: 90vw; /* 더 작은 화면에서는 팝업 너비를 화면의 90%로 설정 */
     padding: 10px;
     top: 40%; /* 더 상단으로 조정 */
     transform: translate(-50%, -5%);
   }
 
   .cmd-title {
-    font-size: 18px; /* 제목 폰트 크기 축소 */
+    font-size: 1rem; /* 제목 폰트 크기 축소 */
   }
 
   .cmd-input {
-    font-size: 12px; /* 입력 필드 폰트 크기 축소 */
+    font-size: 0.8rem; /* 입력 필드 폰트 크기 축소 */
     padding: 6px;
   }
 
   .cmd-button {
-    font-size: 12px; /* 버튼 폰트 크기 축소 */
+    font-size: 0.9rem; /* 버튼 폰트 크기 축소 */
     padding: 6px;
+    width: auto; /* 버튼 너비 자동 조정 */
   }
 }

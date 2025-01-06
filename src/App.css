@@ -9,6 +9,7 @@
   padding: 10px;
   user-select: none; /* 텍스트 선택 비활성화 */
   -webkit-user-drag: none; /* 요소 드래그 비활성화 */
+  overflow-x: hidden; /* 가로 스크롤 비활성화 */
   
 }
 body {
@@ -18,5 +19,6 @@ body {
   background: black;
   user-select: none; /* 텍스트 선택 비활성화 */
   -webkit-user-drag: none; /* 요소 드래그 비활성화 */
+  overflow-x: hidden; /* 가로 스크롤 비활성화 */
 }
 

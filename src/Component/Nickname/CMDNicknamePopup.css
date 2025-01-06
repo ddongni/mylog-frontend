@@ -3,7 +3,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
+  width: 400px; /* 기본 너비 */
+  max-width: 90vw; /* 최대 너비를 화면 너비의 90%로 제한 */
+  min-width: 300px; /* 최소 너비 설정 */
   padding: 20px;
   border: 1px solid lime;
   border-radius: 3px;
@@ -14,41 +16,47 @@
 }
 
 .cmd-title {
-  font-size: 24px;
+  font-size: 1.5rem; /* 반응형 단위로 변경 */
   margin-bottom: 10px;
 }
 
 .cmd-error {
   color: red;
-  font-size: 16px;
+  font-size: 1rem; /* 반응형 단위로 변경 */
   margin-bottom: 5px;
 }
+
 .nickname-content {
+  display: flex;
   flex-direction: column;
+  gap: 10px; /* 항목 간격 추가 */
 }
 
 .cmd-input {
-  width:  80%;
+  width: 80%;
   padding: 10px;
-  margin: 10px;
+  margin: 10px auto; /* 가운데 정렬 */
   border: 1px solid lime;
   border-radius: 3px;
   background-color: black;
   color: lime;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 16px;
+  font-size: 1rem; /* 반응형 단위로 변경 */
 }
 
 .cmd-button {
   width: 40%;
+  max-width: 200px; /* 최대 너비 제한 */
+  min-width: 120px; /* 최소 너비 설정 */
   padding: 10px;
+  margin: 10px auto; /* 가운데 정렬 */
   border: 1px solid lime;
   border-radius: 3px;
   background-color: black;
   color: lime;
   cursor: pointer;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 16px;
+  font-size: 1rem; /* 반응형 단위로 변경 */
 }
 
 .cmd-button:hover {
@@ -68,4 +76,56 @@
   cursor: pointer;
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
+}
+
+/* 반응형 스타일 */
+@media screen and (max-width: 768px) {
+  .nickname-popup {
+    width: 80vw; /* 작은 화면에서는 너비를 화면의 80%로 조정 */
+    padding: 15px; /* 내부 여백 축소 */
+  }
+
+  .cmd-title {
+    font-size: 1.25rem; /* 제목 크기 축소 */
+  }
+
+  .cmd-error {
+    font-size: 0.9rem; /* 에러 메시지 크기 축소 */
+  }
+
+  .cmd-input {
+    font-size: 0.9rem; /* 입력 필드 크기 축소 */
+    padding: 8px;
+  }
+
+  .cmd-button {
+    font-size: 0.9rem; /* 버튼 크기 축소 */
+    padding: 8px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .nickname-popup {
+    width: 90vw; /* 더 작은 화면에서는 너비를 화면의 90%로 조정 */
+    padding: 10px; /* 내부 여백 추가 축소 */
+  }
+
+  .cmd-title {
+    font-size: 1rem; /* 제목 크기 추가 축소 */
+  }
+
+  .cmd-error {
+    font-size: 0.8rem; /* 에러 메시지 크기 추가 축소 */
+  }
+
+  .cmd-input {
+    font-size: 0.8rem; /* 입력 필드 크기 추가 축소 */
+    padding: 6px;
+  }
+
+  .cmd-button {
+    font-size: 0.8rem; /* 버튼 크기 추가 축소 */
+    padding: 6px;
+    width: auto; /* 너비를 자동으로 조정 */
+  }
 }
