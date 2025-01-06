@@ -12,6 +12,8 @@ function CMDNicknamePopup() {
   const [inputValue, setInputValue] = useState('');
   const [errorMassage, setErrorMassage] = useState('');
 
+  const { email } = useSelector((state) => state.user);
+
   const prohibitedWords = [
     "idiot", "stupid", "dumb", "moron", "fool", "bastard", "jerk", 
     "loser", "scumbag", "trash", "garbage", "suck", "nasty", 
@@ -47,7 +49,10 @@ function CMDNicknamePopup() {
     }
 
     try {
-      await dispatch(updateNickname(inputValue)).unwrap();
+      await dispatch(updateNickname({
+        email: email,
+        nickname: inputValue
+      })).unwrap();
       await dispatch(setNickname(inputValue));
       navigate('/');
     } catch (error) {

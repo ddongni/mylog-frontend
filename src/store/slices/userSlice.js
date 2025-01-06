@@ -3,9 +3,8 @@ import axios from 'axios';
 
 export const updateNickname = createAsyncThunk(
     'user/updateNickname',
-    async (nickname) => {
+    async (requestData) => {
       try {
-        const requestData = { email: decodeURIComponent(localStorage.getItem('email')), nickname: nickname };
         const { data } = await axios.put(`/v1/users/nickname`, requestData, {
           withCredentials: true
         });
@@ -19,15 +18,19 @@ export const updateNickname = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState: {
+    email: null,
     nickname: null,
   },
   reducers: {
+    setEmail: (state, action) => {
+      state.email = action.payload;
+    },
     setNickname: (state, action) => {
       state.nickname = action.payload;
     },
   }
 });
 
-export const { setNickname } = userSlice.actions;
+export const { setEmail, setNickname } = userSlice.actions;
 
 export default userSlice.reducer;

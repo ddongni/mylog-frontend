@@ -21,7 +21,7 @@ function CMDLog() {
   const [backgroundColor, setBackgroundColor] = useState('#000');
   const [textColor, setTextColor] = useState('lime');
   const logEndRef = useRef(null);
-  const { nickname } = useSelector((state) => state.user);
+  const { nickname, email } = useSelector((state) => state.user);
 
   const dummyData = {
     nickname: "mylog",
@@ -160,7 +160,6 @@ function CMDLog() {
   
   const init = async () => {
     try {
-      const email = decodeURIComponent(localStorage.getItem('email'));
       const result = await axios.post(`/v1/users/init`, 
         {
           email: email

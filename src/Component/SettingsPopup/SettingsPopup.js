@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 import './SettingsPopup.css';
 import axios from 'axios';
 
@@ -9,6 +8,8 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const navigate = useNavigate();
   
+  const { email } = useSelector((state) => state.user);
+
   const toggleSettings = () => {
     setIsSettingsOpen(!isSettingsOpen);
   };
@@ -29,7 +30,6 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
 
   const save = async (requestData) => {
     try {
-      const email = decodeURIComponent(localStorage.getItem('email'));
       await axios.put(`/v1/settings/update`, 
         {
           email: email,
