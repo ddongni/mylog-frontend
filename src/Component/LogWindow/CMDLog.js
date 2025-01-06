@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, use } from 'react';
 import './CMDLog.css';
 import icons from './icons';
 import statusOptions from './status';
@@ -22,6 +22,7 @@ function CMDLog() {
   const [textColor, setTextColor] = useState('lime');
   const logEndRef = useRef(null);
   const { nickname, email } = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(true);
 
   const dummyData = {
     nickname: "mylog",
@@ -199,7 +200,7 @@ function CMDLog() {
       client.current.connect(
         {},
         () => {
-          console.log('WebSocket connected');
+          setLoading(false);
           client.current.subscribe('/topic/2025', (message) => {
 
               const receivedLog = JSON.parse(message.body);
@@ -238,7 +239,7 @@ function CMDLog() {
           });
         },
         (error) => {
-          console.error('WebSocket connection error:', error);
+          console.error('Failed to connect WebSocket:', error);
         }
       );
     }
@@ -361,6 +362,7 @@ function CMDLog() {
             Add to Log
           </button>
           <div className="blinking-cursor" style={{ backgroundColor: textColor }}></div>
+          {loading?<div id="loading" style={{ borderTop: "2px solid " + textColor }} class="loading-spinner"></div>:<></>}
         </div>
       </div>
     </div>
