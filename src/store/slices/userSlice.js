@@ -5,7 +5,7 @@ export const updateNickname = createAsyncThunk(
     'user/updateNickname',
     async (nickname) => {
       try {
-        const requestData = { nickname: nickname };
+        const requestData = { email: decodeURIComponent(localStorage.getItem('email')), nickname: nickname };
         const { data } = await axios.put(`/v1/users/nickname`, requestData, {
           withCredentials: true
         });

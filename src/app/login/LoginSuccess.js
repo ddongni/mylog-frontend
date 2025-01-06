@@ -16,6 +16,16 @@ const LoginSuccess = () => {
             if (nickname && nickname.length > 0) {
                 try {
                     await dispatch(setNickname(nickname));
+
+                    const value = `; ${document.cookie}`;
+                    const parts = value.split(`; email=`);
+                    if (parts.length === 2) {
+                        const email = parts.pop().split(';').shift();
+                        if (email) {
+                            localStorage.setItem("email", email);
+                        }
+                    }
+
                     navigate('/');
                 } catch (error) {
                     console.error('Nickname update failed:', error);

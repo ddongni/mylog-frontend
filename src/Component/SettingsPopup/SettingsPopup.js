@@ -29,7 +29,12 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
 
   const save = async (requestData) => {
     try {
-      await axios.put(`/v1/settings/update`, requestData, {
+      const email = decodeURIComponent(localStorage.getItem('email'));
+      await axios.put(`/v1/settings/update`, 
+        {
+          email: email,
+          setting: requestData
+        }, {
         withCredentials: true
       });
     } catch (error) {

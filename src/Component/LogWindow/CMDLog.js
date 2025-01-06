@@ -160,9 +160,18 @@ function CMDLog() {
   
   const init = async () => {
     try {
-      const result = await axios.get(`/v1/users/init`, {
-        withCredentials: true,
-      });
+      const email = decodeURIComponent(localStorage.getItem('email'));
+      const result = await axios.post(`/v1/users/init`, 
+        {
+          email: email
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          withCredentials: true,
+        }
+      );
       const userInfo = result.data;
       setUserIcon(userInfo.emojiCode || 0);
       setUserStatus(userInfo.status || 'online');
