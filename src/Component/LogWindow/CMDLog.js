@@ -354,11 +354,16 @@ function CMDLog() {
           <span className="icon" onClick={() => setShowIconPicker(true)}>
             <img src={icons[userIcon]?.url} alt={userIcon} />
           </span>
-          {nickname || 'Guest'} |{' '}
+          {nickname || 'Guest'} | {' '}
           <span className="status" onClick={() => setShowStatusPicker(true)}>
             {userStatus}
           </span>
-          {loading?<div className="connecting" style={{ color: textColor }}>| Connecting...</div>:
+          {loading?
+          <>
+          |
+          <div className="connecting" style={{ color: textColor }}> Connecting...</div>
+          </>
+          :
           <>
           <button className="common-button" onClick={updateLog}>
             Add to Log
