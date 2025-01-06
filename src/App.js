@@ -46,7 +46,7 @@ function App() {
 
     // 유성 이미지 텍스처 로드
     const textureLoader = new THREE.TextureLoader();
-    const meteorTexture = textureLoader.load('./myloglogo.png'); // 유성 텍스처
+    const meteorTexture = textureLoader.load('./myloglogo192x192.png'); // 유성 텍스처
 
     // 유성 추가
     const meteors = [];

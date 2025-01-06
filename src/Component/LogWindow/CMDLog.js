@@ -123,7 +123,7 @@ function CMDLog() {
   useEffect(() => {
     const interval = setInterval(() => {
       setLogs((prevLogs) =>
-        prevLogs.map((log) =>
+        prevLogs && prevLogs.map((log) =>
           log.animatedText
             ? log // 애니메이션 중인 항목은 무시
             : { ...log, elapsedTime: getElapsedTime(log.updatedAt) }
@@ -147,7 +147,7 @@ function CMDLog() {
 
     const interval = setInterval(() => {
       setLogs((prevLogs) =>
-        prevLogs.map((log) => ({
+        prevLogs && prevLogs.map((log) => ({
           ...log,
           elapsedTime: getElapsedTime(log.updatedAt),
         }))
@@ -341,7 +341,7 @@ function CMDLog() {
           </span>
           {dummyData.nickname} | {dummyData.status} | {getElapsedTime(dummyData.updatedAt, true)}
         </div>
-        {logs.map((log, index) => (
+        {logs && logs.map((log, index) => (
           <div key={index} className="log-entry">
             <span className="icon">
               <img src={icons[log.emojiCode]?.url} alt={log.emojiCode} />

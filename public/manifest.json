@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "myloglogo.png",
+      "src": "myloglogo192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "myloglogo.png",
+      "src": "myloglogo512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
