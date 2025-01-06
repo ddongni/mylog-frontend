@@ -30,7 +30,7 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
 
   const save = async (requestData) => {
     try {
-      await axios.put(`/v1/settings/update`, 
+      await axios.put(`${process.env.REACT_APP_SERVER_URL}/v1/settings/update`, 
         {
           email: email,
           setting: requestData
@@ -47,7 +47,7 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
 
   const logout = async () => {
     try {
-      await axios.post(`/v1/users/logout`, null, {
+      await axios.post(`${process.env.REACT_APP_SERVER_URL}/v1/users/logout`, null, {
         withCredentials: true,
       });
       navigate('/login');

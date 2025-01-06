@@ -161,7 +161,7 @@ function CMDLog() {
   
   const init = async () => {
     try {
-      const result = await axios.post(`/v1/users/init`, 
+      const result = await axios.post(`${process.env.REACT_APP_SERVER_URL}/v1/users/init`, 
         {
           email: email
         },
@@ -268,7 +268,7 @@ function CMDLog() {
 
   const getAllLogs = async () => {
     try {
-      const result = await axios.get(`/v1/logs/all`, {
+      const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/logs/all`, {
         withCredentials: true,
       });
       setLogs(result.data.logs);
