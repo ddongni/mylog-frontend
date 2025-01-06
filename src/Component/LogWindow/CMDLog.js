@@ -160,7 +160,9 @@ function CMDLog() {
   
   const init = async () => {
     try {
-      const result = await axios.get(`/v1/users/init`);
+      const result = await axios.get(`/v1/users/init`, {
+        withCredentials: true,
+      });
       const userInfo = result.data;
       setUserIcon(userInfo.emojiCode || 0);
       setUserStatus(userInfo.status || 'online');
@@ -257,7 +259,9 @@ function CMDLog() {
 
   const getAllLogs = async () => {
     try {
-      const result = await axios.get(`/v1/logs/all`);
+      const result = await axios.get(`/v1/logs/all`, {
+        withCredentials: true,
+      });
       setLogs(result.data.logs);
     } catch (error) {
       console.error('Error fetching logs:', error);

@@ -29,7 +29,9 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
 
   const save = async (requestData) => {
     try {
-      await axios.put(`/v1/settings/update`, requestData);
+      await axios.put(`/v1/settings/update`, requestData, {
+        withCredentials: true
+      });
     } catch (error) {
       console.error('Failed to save', error);
       if(error.message === 'Network Error'){
@@ -40,7 +42,9 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
 
   const logout = async () => {
     try {
-      await axios.post(`/v1/users/logout`);
+      await axios.post(`/v1/users/logout`, null, {
+        withCredentials: true,
+      });
       navigate('/login');
     } catch (error) {
       console.error('Failed to logout', error);

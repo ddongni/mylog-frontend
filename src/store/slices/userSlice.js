@@ -6,7 +6,9 @@ export const updateNickname = createAsyncThunk(
     async (nickname) => {
       try {
         const requestData = { nickname: nickname };
-        const { data } = await axios.put(`/v1/users/nickname`, requestData);
+        const { data } = await axios.put(`/v1/users/nickname`, requestData, {
+          withCredentials: true
+        });
         return data;
       } catch (error) {
         throw error;
