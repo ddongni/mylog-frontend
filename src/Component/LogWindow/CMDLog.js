@@ -360,8 +360,8 @@ function CMDLog() {
           </span>
           {loading?
           <>
-          |
-          <div className="connecting" style={{ color: textColor }}> Connecting...</div>
+          <div className="connecting-front">{' | '}</div>
+          <div className="connecting" style={{ color: textColor }}>Connecting...</div>
           </>
           :
           <>

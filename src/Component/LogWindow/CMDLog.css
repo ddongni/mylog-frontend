@@ -278,3 +278,8 @@
   animation: blink 1s steps(2, start) infinite;
   font-weight: bold;
 }
+
+.connecting-front {
+  padding-left: 10px;
+  padding-right: 10px;
+}
