@@ -23,6 +23,7 @@ function CMDLog() {
   const logEndRef = useRef(null);
   const { nickname } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
+  const [isOpenedPopup, setIsOpenedPopup] = useState(false);
 
   const dummyData = {
     nickname: "mylog",
@@ -325,12 +326,15 @@ function CMDLog() {
     }
   };
   
+  const setOpen = (value) => {
+    setIsOpenedPopup(value);
+  };
 
   return (
     <div>
-    <div className="mylogApp" style={{ backgroundColor: backgroundColor, color: textColor }}>
+    <div className={isOpenedPopup?"mylogApp background-disable":"mylogApp"} style={{ backgroundColor: backgroundColor, color: textColor }}>
       {/* 메인 컨텐츠 */}
-      <SettingsPopup onChangeBackgroundColor={setBackgroundColor} onChangeTextColor={setTextColor} />
+      <SettingsPopup setOpen={setOpen} onChangeBackgroundColor={setBackgroundColor} onChangeTextColor={setTextColor} />
       <div className="log">
         <div className="log-entry">
           <span className="icon">

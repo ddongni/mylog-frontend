@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import './SettingsPopup.css';
 import axios from 'axios';
 
-function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
+function SettingsPopup({ setOpen, onChangeBackgroundColor, onChangeTextColor }) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const navigate = useNavigate();
 
   const toggleSettings = () => {
+    setOpen(!isSettingsOpen);
     setIsSettingsOpen(!isSettingsOpen);
   };
 
