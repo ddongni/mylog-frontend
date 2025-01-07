@@ -12,8 +12,6 @@ function CMDNicknamePopup() {
   const [inputValue, setInputValue] = useState('');
   const [errorMassage, setErrorMassage] = useState('');
 
-  const { email } = useSelector((state) => state.user);
-
   const prohibitedWords = [
     "idiot", "stupid", "dumb", "moron", "fool", "bastard", "jerk", 
     "loser", "scumbag", "trash", "garbage", "suck", "nasty", 
@@ -50,7 +48,6 @@ function CMDNicknamePopup() {
 
     try {
       await dispatch(updateNickname({
-        email: email,
         nickname: inputValue
       })).unwrap();
       await dispatch(setNickname(inputValue));
@@ -59,7 +56,7 @@ function CMDNicknamePopup() {
       if(error.message === 'Request failed with status code 409') {
         setErrorMassage('nickname is already taken');
       }
-      if(error.message === 'Network Error'){
+      if(error.status === 403){
         navigate('/login');
       }
     }

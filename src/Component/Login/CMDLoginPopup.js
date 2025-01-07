@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './CMDLoginPopup.css';
 import { useDispatch } from 'react-redux';
-import { setNickname, setEmail } from '../../store/slices/userSlice';
+import { setNickname } from '../../store/slices/userSlice';
 
 function CMDLoginPopup() {
   const dispatch = useDispatch();
@@ -15,7 +15,6 @@ function CMDLoginPopup() {
   useEffect(() => {
     const updateUser = async () => {
       await dispatch(setNickname(null));
-      await dispatch(setEmail(null));
     };
 
     updateUser();

@@ -21,7 +21,7 @@ function CMDLog() {
   const [backgroundColor, setBackgroundColor] = useState('#000');
   const [textColor, setTextColor] = useState('lime');
   const logEndRef = useRef(null);
-  const { nickname, email } = useSelector((state) => state.user);
+  const { nickname } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
 
   const dummyData = {
@@ -161,10 +161,7 @@ function CMDLog() {
   
   const init = async () => {
     try {
-      const result = await axios.post(`${process.env.REACT_APP_SERVER_URL}/v1/users/init`, 
-        {
-          email: email
-        },
+      const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/users/init`,
         {
           headers: {
             "Content-Type": "application/json"
@@ -183,7 +180,7 @@ function CMDLog() {
       }
     } catch (error) {
       console.error('Error fetching user:', error);
-      if(error.message === 'Network Error'){
+      if(error.status === 403){
         navigate('/login');
       }
     }
@@ -274,7 +271,7 @@ function CMDLog() {
       setLogs(result.data.logs);
     } catch (error) {
       console.error('Error fetching logs:', error);
-      if(error.message === 'Network Error'){
+      if(error.status === 403){
         navigate('/login');
       }
     }

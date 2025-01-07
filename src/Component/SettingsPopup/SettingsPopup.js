@@ -7,8 +7,6 @@ import axios from 'axios';
 function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const navigate = useNavigate();
-  
-  const { email } = useSelector((state) => state.user);
 
   const toggleSettings = () => {
     setIsSettingsOpen(!isSettingsOpen);
@@ -32,14 +30,13 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
     try {
       await axios.put(`${process.env.REACT_APP_SERVER_URL}/v1/settings/update`, 
         {
-          email: email,
           setting: requestData
         }, {
         withCredentials: true
       });
     } catch (error) {
       console.error('Failed to save', error);
-      if(error.message === 'Network Error'){
+      if(error.status === 403){
         navigate('/login');
       }
     }
@@ -53,7 +50,7 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
       navigate('/login');
     } catch (error) {
       console.error('Failed to logout', error);
-      if(error.message === 'Network Error'){
+      if(error.status === 403){
         navigate('/login');
       }
     }

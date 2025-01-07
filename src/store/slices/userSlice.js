@@ -18,19 +18,15 @@ export const updateNickname = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    email: null,
     nickname: null,
   },
   reducers: {
-    setEmail: (state, action) => {
-      state.email = action.payload;
-    },
     setNickname: (state, action) => {
       state.nickname = action.payload;
     },
   }
 });
 
-export const { setEmail, setNickname } = userSlice.actions;
+export const { setNickname } = userSlice.actions;
 
 export default userSlice.reducer;
