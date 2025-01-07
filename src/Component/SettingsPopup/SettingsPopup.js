@@ -58,10 +58,12 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
 
   return (
     <div>
-      <button className="hamburger-button" onClick={toggleSettings}>
-        ☰
+      <button className="setting-icon" onClick={toggleSettings}>
+        <img className="setting-icon-image" src="/setting.svg" alt="settings" />
       </button>
       {isSettingsOpen && (
+        <>
+        <div className="popup-backdrop"/>
         <div className="settings-popup">
           <button
             className="close-button"
@@ -110,8 +112,8 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
             <button className='settings-button' onClick={() => navigate('/nickname')}>Change Nickname</button>
             <button className='settings-button' onClick={logout}>LogOut</button>
           </div>
-          
         </div>
+        </>
       )}
     </div>
   );

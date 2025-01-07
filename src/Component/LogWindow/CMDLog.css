@@ -85,15 +85,13 @@
     opacity: 0;
   }
 }
-
-
-.popup-content::-webkit-scrollbar-thumb {
+::-webkit-scrollbar {
+  width: 3px; /* 스크롤바 너비 */
+  height: 3px; /* 가로 스크롤바 높이 */
+}
+::-webkit-scrollbar-thumb {
   background: lime; /* 스크롤바 색상 */
   border-radius: 10px; /* 스크롤바 모서리 둥글게 */
-}
-
-.popup-content::-webkit-scrollbar-track {
-  background: black; /* 스크롤바 트랙 색상 */
 }
 
 .icon-grid {

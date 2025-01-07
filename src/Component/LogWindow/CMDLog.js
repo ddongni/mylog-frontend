@@ -348,11 +348,11 @@ function CMDLog() {
         ))}
         <div className="input-prompt">
           <span className="input-pointer">&gt;</span>
-          <span className="icon" onClick={() => setShowIconPicker(true)}>
+          <span className="icon" style={{cursor: "pointer"}} onClick={() => setShowIconPicker(true)}>
             <img src={icons[userIcon]?.url} alt={userIcon} />
           </span>
           {nickname || 'Guest'} | {' '}
-          <span className="status" onClick={() => setShowStatusPicker(true)}>
+          <span className="status" style={{cursor: "pointer"}} onClick={() => setShowStatusPicker(true)}>
             {userStatus}
           </span>
           {loading?
