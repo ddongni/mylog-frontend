@@ -81,6 +81,7 @@ function SettingsPopup({ setOpen, onChangeBackgroundColor, onChangeTextColor }) 
                 save({ backgroundColor: color.value });
                 onChangeBackgroundColor(color.value);
                 setIsSettingsOpen(false);
+                setOpen(false);
               }}
             >
               <div
@@ -99,6 +100,7 @@ function SettingsPopup({ setOpen, onChangeBackgroundColor, onChangeTextColor }) 
                 save({ textColor: color.value });
                 onChangeTextColor(color.value);
                 setIsSettingsOpen(false);
+                setOpen(false);
               }}
             >
               <div
