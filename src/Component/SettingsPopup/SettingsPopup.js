@@ -37,7 +37,7 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
     } catch (error) {
       console.error('Failed to save', error);
       if(error.status === 403){
-        navigate('/login');
+        navigate('/login?auth=expired');
       }
     }
   };
@@ -51,7 +51,7 @@ function SettingsPopup({ onChangeBackgroundColor, onChangeTextColor }) {
     } catch (error) {
       console.error('Failed to logout', error);
       if(error.status === 403){
-        navigate('/login');
+        navigate('/login?auth=expired');
       }
     }
   };

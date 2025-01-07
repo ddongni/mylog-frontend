@@ -57,7 +57,7 @@ function CMDNicknamePopup() {
         setErrorMassage('nickname is already taken');
       }
       if(error.status === 403){
-        navigate('/login');
+        navigate('/login?auth=expired');
       }
     }
   };

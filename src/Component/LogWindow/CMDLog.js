@@ -181,7 +181,7 @@ function CMDLog() {
     } catch (error) {
       console.error('Error fetching user:', error);
       if(error.status === 403){
-        navigate('/login');
+        navigate('/login?auth=expired');
       }
     }
   };
@@ -272,7 +272,7 @@ function CMDLog() {
     } catch (error) {
       console.error('Error fetching logs:', error);
       if(error.status === 403){
-        navigate('/login');
+        navigate('/login?auth=expired');
       }
     }
   };
