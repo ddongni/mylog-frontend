@@ -222,6 +222,7 @@ function CMDLog() {
                       const updatedLog = [...prevLog];
                       updatedLog.splice(logIndex, 1); // 기존 로그 제거
                       updatedLog.push(newLog); // 새로운 로그를 마지막에 추가
+                      animateText(newLog); // 새 로그 추가 시 애니메이션 실행
                       return updatedLog;
                     }
                     // updatedAt이 같다면 그대로 유지
