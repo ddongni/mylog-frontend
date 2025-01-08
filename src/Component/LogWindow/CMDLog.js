@@ -119,6 +119,10 @@ function CMDLog() {
               : log
           )
         );
+
+        if(entry.nickname === nickname) {
+          logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }
       }
     }, 50);
   };
