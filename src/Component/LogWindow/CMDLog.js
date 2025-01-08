@@ -24,6 +24,8 @@ function CMDLog() {
   const { nickname } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
   const [isOpenedPopup, setIsOpenedPopup] = useState(false);
+  const [isInitLogs, setIsInitLogs] = useState(false);
+  const logsEndRef = useRef(null);
 
   const dummyData = {
     nickname: "mylog",
@@ -135,6 +137,11 @@ function CMDLog() {
     return () => clearInterval(interval);
   }, []);
   
+  useEffect(() => {
+    if(!loading && isInitLogs) {
+      logsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [loading, isInitLogs]);
 
   useEffect(() => {
     init();
@@ -179,6 +186,7 @@ function CMDLog() {
       if(userInfo.settings?.textColor) {
         setTextColor(userInfo.settings.textColor);
       }
+      setIsInitLogs(true);
     } catch (error) {
       console.error('Error fetching user:', error);
       if(error.status === 403){
@@ -370,7 +378,7 @@ function CMDLog() {
           <button className="common-button" onClick={updateLog}>
             Add to Log
           </button>
-          <div className="blinking-cursor" style={{ backgroundColor: textColor }}></div>
+          <div ref={logsEndRef} className="blinking-cursor" style={{ backgroundColor: textColor }}></div>
           </>}
         </div>
       </div>
