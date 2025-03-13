@@ -173,7 +173,7 @@ function CMDLog() {
   
   const init = async () => {
     try {
-      const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/users/init`,
+      const result = await axios.get(`https://mylogapi.brokers-x.com/v1/users/init`,
         {
           headers: {
             "Content-Type": "application/json"
@@ -202,7 +202,7 @@ function CMDLog() {
   const connectSocket = useCallback(() => {
     const currentNickname = nickname;
     client.current = Stomp.over(() => {
-      const sock = new SockJS(`${process.env.REACT_APP_SERVER_URL}/ws-stomp`);
+      const sock = new SockJS(`https://mylogapi.brokers-x.com/ws-stomp`);
       return sock;
     });
 
@@ -279,7 +279,7 @@ function CMDLog() {
 
   const getAllLogs = async () => {
     try {
-      const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/logs/all`, {
+      const result = await axios.get(`https://mylogapi.brokers-x.com/v1/logs/all`, {
         withCredentials: true,
       });
       setLogs(result.data.logs);

@@ -28,7 +28,7 @@ function SettingsPopup({ setOpen, onChangeBackgroundColor, onChangeTextColor }) 
 
   const save = async (requestData) => {
     try {
-      await axios.put(`${process.env.REACT_APP_SERVER_URL}/v1/settings/update`, 
+      await axios.put(`https://mylogapi.brokers-x.com/v1/settings/update`, 
         {
           setting: requestData
         }, {
@@ -44,7 +44,7 @@ function SettingsPopup({ setOpen, onChangeBackgroundColor, onChangeTextColor }) 
 
   const logout = async () => {
     try {
-      await axios.post(`${process.env.REACT_APP_SERVER_URL}/v1/users/logout`, null, {
+      await axios.post(`https://mylogapi.brokers-x.com/v1/users/logout`, null, {
         withCredentials: true,
       });
       navigate('/login');

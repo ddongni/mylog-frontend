@@ -5,7 +5,7 @@ export const updateNickname = createAsyncThunk(
     'user/updateNickname',
     async (requestData) => {
       try {
-        const { data } = await axios.put(`${process.env.REACT_APP_SERVER_URL}/v1/users/nickname`, requestData, {
+        const { data } = await axios.put(`https://mylogapi.brokers-x.com/v1/users/nickname`, requestData, {
           withCredentials: true
         });
         return data;

@@ -6,7 +6,7 @@ import { setNickname } from '../../store/slices/userSlice';
 function CMDLoginPopup() {
   const dispatch = useDispatch();
 
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
+  const serverUrl = "https://mylogapi.brokers-x.com";
 
   const handleLogin = () => {
     window.location.href = serverUrl + '/oauth2/authorization/google';
